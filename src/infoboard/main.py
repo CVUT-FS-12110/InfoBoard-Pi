@@ -1,10 +1,6 @@
 import os
 import sys
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta
-import struct
 
-from PyQt5 import QtSvg
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -28,8 +24,6 @@ class MainWindow(QMainWindow):
         self.videos = []
         self.setCursor(Qt.BlankCursor)
         self.setGeometry(self.geometry_info)
-        with requests.Session() as s:
-                self.dataprovider = DataProvider(s)
 
     def update_images(self):
         try:
