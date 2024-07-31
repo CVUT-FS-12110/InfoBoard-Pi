@@ -1,0 +1,9 @@
+media_paths:
+  images: ''
+  videos: ''
+
+auto_update: true
+auto_start: true
+auto_power_off: '21:00'
+server_password: '!changeIt'
+
