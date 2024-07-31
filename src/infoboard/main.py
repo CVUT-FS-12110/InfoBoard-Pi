@@ -48,9 +48,9 @@ class MainWindow(QMainWindow):
             image_widget = ImageViewer(image=self.images[index], size=self.size())
             self.setCentralWidget(image_widget)
         else:
-            self.show_dash()
+            self.show_video()
 
-        QTimer.singleShot(SLIDE_TIME, self.show_dash)
+        QTimer.singleShot(SLIDE_TIME, self.show_video)
 
 
     def update_videos(self):
