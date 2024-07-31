@@ -97,7 +97,7 @@ class MainWindow(QMainWindow):
                 self.video_change_state(0)
 
     def start_show(self):
-        QTimer.singleShot(200, self.show_dash)
+        QTimer.singleShot(200, self.show_image)
 
     def video_change_state(self, state):
         if state == 0:
