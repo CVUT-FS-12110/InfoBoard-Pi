@@ -3,8 +3,9 @@
 if ! hash python3.9; then
   echo "python3.9 is not installed, installing python"
   sudo apt update
-  sudo apt install software-properties-common
-  sudo apt-get install python3-launchpadlib
+  sudo apt install -y software-properties-common
+  sudo apt install -y python3-launchpadlib
+  sudo apt install -y ca-certificates
   sudo add-apt-repository ppa:deadsnakes/ppa
   sudo apt update
   sudo apt install -y python3.9
