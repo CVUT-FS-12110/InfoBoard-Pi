@@ -1,0 +1,12 @@
+default_slide_time: 60
+# default_media_dir:
+media:
+  - url: some_url_relative_to_default_media_directory_or_absolut_path
+    slide_time: if_image_the_time_in_seconds_fallback_to_default_if_not_set_ignored_for_video
+  - url: some_url_relative_to_default_media_directory_or_absolut_path
+    slide_time: if_image_the_time_in_seconds_fallback_to_default_if_not_set_ignored_for_video
+  - url: jedna.png
+    slide_time: 5
+  - url: dva.png
+    slide_time: 5
+  - url: test.mp4

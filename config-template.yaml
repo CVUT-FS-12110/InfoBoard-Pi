@@ -1,7 +1,4 @@
-media_paths:
-  images: ''
-  videos: ''
-
+configuration_file: none
 auto_update: true
 auto_start: true
 auto_power_off: '21:00'
