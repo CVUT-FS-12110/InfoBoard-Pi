@@ -2,6 +2,7 @@
 
 if ! hash python3.9; then
   echo "python3.9 is not installed, installing python"
+  sudo ntpd -qg; sudo hwclock -w
   sudo apt update
   sudo apt install -y software-properties-common
   sudo apt install -y python3-launchpadlib
