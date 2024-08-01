@@ -107,7 +107,7 @@ echo "Activation of virtual environment"
 echo "Upgrading pip ..."
 "${PYENV_ROOT}"/versions/infoboard_venv/bin/python -m pip install --upgrade pip
 echo "Installing requirements ..."
-"${PYENV_ROOT}"/versions/infoboard_venv/bin/python -m pip install --upgrade pip install -r "$PWD"/requirements.txt
+"${PYENV_ROOT}"/versions/infoboard_venv/bin/python -m pip install -r "$PWD"/requirements.txt
 
 if ! hash vlc; then
   echo "Installing vlc ..."
@@ -119,7 +119,6 @@ fi
 echo "Starting python install script ..."
 "${PYENV_ROOT}"/versions/infoboard_venv/bin/python ./src/infoboard/configuration.py
 
-pyenv deactivate
 
 
 

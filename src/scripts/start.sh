@@ -1,6 +1,6 @@
 sudo -u pi sh -c export PYENV_ROOT="$HOME/.pyenv"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-PWD=$(pwd)
 if ! timeout 1s xset q &>/dev/null; then
   sudo chmod 777 /dev/tty7
   sleep 20

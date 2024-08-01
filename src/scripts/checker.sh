@@ -2,10 +2,9 @@
 PWD=$(pwd)
 if ! pgrep -f "inforboard/main.py" &>/dev/null; then
   SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+  echo "$SCRIPT_DIR"
 	killall python
-	cd "$SCRIPT_DIR" || exit
-	start.sh
-	cd "$PWD" || return
+	cd "$SCRIPT_DIR" && source start.sh
 fi
 
 
