@@ -3,7 +3,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 HOME_DIR=$(eval "echo ~pi")
 
-if ! timeout 1s sudo -u pi xset q &>/dev/null; then
+if if ! pgrep -f "X" &>/dev/null; then
   sudo chmod 777 /dev/tty7
   sleep 20
   ./src/infoboard/configuration.py
