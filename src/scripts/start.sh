@@ -9,7 +9,7 @@ if ! pgrep -f "X" &>/dev/null; then
   ./src/infoboard/configuration.py
   sudo -u pi startx "$HOME_DIR"/.pyenv/versions/infoboard_venv/bin/python "$PWD"/../infoboard/main.py -- vt7
 else
-  sudo -u pi DISPLAY=:0 "$HOME_DIR"/.pyenv/versions/infoboard_venv/bin/python  "$PWD"/../infoboard/main.py
+  sudo -u pi DISPLAY=:0 QT_QPA_PLATFORM=wayland "$HOME_DIR"/.pyenv/versions/infoboard_venv/bin/python  "$PWD"/../infoboard/main.py
 fi
 
 
