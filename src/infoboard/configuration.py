@@ -39,7 +39,7 @@ if not os.path.isfile(data_cfg_file):
 
 cron = CronTab(user='root')
 cron.remove_all(comment='infobar-pi')
-job = cron.new(command=f'/bin/bash {ROOT_FOLDER}/src/scripts/checker.sh', comment='infobar-pi')
+job = cron.new(command=f'/bin/bash {ROOT_FOLDER}/src/scripts/checker.sh > /var/log/infoboard.log 2>&1', comment='infobar-pi')
 job.minute.every(1)
 cron.write()
 
