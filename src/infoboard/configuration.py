@@ -37,7 +37,7 @@ if not os.path.isfile(data_cfg_file):
     with open(data_cfg_file, 'w') as cfg_file:
         yaml.dump(cfg_template, cfg_file)
 
-cron = CronTab(tabfile='/etc/crontab', user='root')
+cron = CronTab(user='root')
 cron.remove_all(comment='infobar-pi')
 job = cron.new(command=f'{ROOT_FOLDER}/src/scripts/checker.sh', comment='infobar-pi')
 job.minute.every(1)
