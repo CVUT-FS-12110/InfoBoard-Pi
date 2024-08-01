@@ -64,14 +64,14 @@ echo ""
 
 if [ ! -f "$PWD"/src/infoboard/configuration.py ]; then
   echo "Infoboard Pi source code doesn't found, start thi script inside the repository directory."
-  exit
+  return
 else
   echo "Infoboard Pi source code doesn't found"
 fi
 
 if [ ! -f "$PWD"/config.yaml ]; then
   echo "$PWD/config.yaml doesn't found, please, create the config file based on delivered config-template.yaml"
-  exit
+  return
 else
   echo "$PWD/config.yaml found"
   echo ""
@@ -118,7 +118,7 @@ else
 fi
 
 echo "Starting python install script ..."
-python ./src/infoboard/configuration.py
+#python ./src/infoboard/configuration.py
 
 pyenv deactivate
 
