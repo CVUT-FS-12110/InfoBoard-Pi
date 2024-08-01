@@ -1,13 +1,11 @@
-if ! pgrep -f "/home/zat/Scripts/modbustest.py" &>/dev/null; then
-	if ! pgrep -f "/home/zat/Scripts/zatpi/main.py" &>/dev/null; then
-		killall python
-	        /home/zat/Scripts/start.sh &
-	else
-               sudo -u zat python /home/zat/Scripts/modbustest.py >> /dev/null &
-        fi
-elif ! pgrep -f "/home/zat/Scripts/zatpi/main.py" &>/dev/null; then
+#!/usr/bin/env bash
+PWD=$(pwd)
+if ! pgrep -f "inforboard/main.py" &>/dev/null; then
+  SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 	killall python
-	/home/zat/Scripts/start.sh &
+	cd "$SCRIPT_DIR" || exit
+	start.sh
+	cd "$PWD" || return
 fi
 
 

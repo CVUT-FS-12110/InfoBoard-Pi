@@ -55,13 +55,34 @@
 ##pip install -r "$PWD"/requirements.txt
 ##
 ##echo "Starting python install script..."
+
 PWD=$(pwd)
+
+echo "InfoBoard Pi installation script"
+echo "--------------------------------"
+echo ""
+
+if [ ! -f "$PWD"/src/infoboard/configuration.py ]; then
+  echo "Infoboard Pi source code doesn't found, start thi script inside the repository directory."
+  exit
+else
+  echo "Infoboard Pi source code doesn't found"
+fi
+
+if [ ! -f "$PWD"/config.yaml ]; then
+  echo "$PWD/config.yaml doesn't found, please, create the config file based on delivered config-template.yaml"
+  exit
+else
+  echo "$PWD/config.yaml found"
+  echo ""
+  echo "Starting installation"
+fi
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 
 if ! hash pyenv; then
-  echo "installing pyenv"
+  echo "Installing pyenv ..."
   sudo apt update
   sudo apt install -y curl
   curl https://pyenv.run | bash
@@ -71,9 +92,9 @@ if ! hash pyenv; then
 fi
 
 if [ ! -d "$PYENV_ROOT/versions/infoboard_venv" ]; then
-   echo "Creating virtual environment"
+   echo "Creating virtual environment ..."
    if [ ! -d "$PYENV_ROOT/versions/3.9.2" ]; then
-      echo "Installing Python 3.9.2"
+      echo "Installing Python 3.9.2 ..."
       sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
       libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
       libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
@@ -82,13 +103,25 @@ if [ ! -d "$PYENV_ROOT/versions/infoboard_venv" ]; then
    pyenv virtualenv 3.9.2 infoboard_venv
 fi
 
+echo "Activation of virtual environment"
 pyenv activate infoboard_venv
-echo "Upgrading pip"
+echo "Upgrading pip ..."
 pip install --upgrade pip
-echo "Installing requirements"
+echo "Installing requirements ..."
 pip install -r "$PWD"/requirements.txt
 
-echo "Starting python install script..."
+if ! hash vlc; then
+  echo "Installing vlc ..."
+  sudo apt install -y vlc
+else
+  echo "vlc found"
+fi
+
+echo "Starting python install script ..."
+python ./src/infoboard/configuration.py
+
+pyenv deactivate
+
 
 
 
