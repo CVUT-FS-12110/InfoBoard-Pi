@@ -61,8 +61,8 @@ job.minute.every(1)
 if auto_power_off is not None:
     job = cron.new(command=f'poweroff',
                    comment='infoboard-pi')
-    job.hours = apo_hours
-    job.minutes = apo_minutes
+    job.hour.on(apo_hours)
+    job.minute.on(apo_minutes)
 
 cron.write()
 
