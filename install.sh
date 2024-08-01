@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #if ! hash python3.9; then
 #  echo "python3.9 is not installed, installing python"

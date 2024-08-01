@@ -1,4 +1,4 @@
-configuration_file: none
+# configuration_file:
 auto_update: true
 auto_start: true
 auto_power_off: '21:00'

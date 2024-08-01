@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 sudo -u pi sh -c export PYENV_ROOT="$HOME/.pyenv"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
@@ -9,7 +11,7 @@ if ! timeout 1s xset q &>/dev/null; then
 else
   sudo -u pi "${PYENV_ROOT}"/versions/infoboard_venv/bin/python  "$PWD"/../infoboard/main.py
 fi
-killall python
+
 
 
 
