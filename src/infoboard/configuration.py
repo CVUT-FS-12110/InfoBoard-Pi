@@ -38,8 +38,11 @@ if not os.path.isfile(data_cfg_file):
         yaml.dump(cfg_template, cfg_file)
 
 cron = CronTab(tabfile='/etc/crontab', user=False)
-for job in cron:
-    print(job)
+cron.remove_all(comment='infobar-pi')
+job = cron.new(command='', comment='infobar-pi')
+job.minute.every(1)
+cron.write()
+
 
 
 
