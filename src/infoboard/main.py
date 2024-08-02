@@ -84,7 +84,7 @@ class AppData:
     config_last_update: float = datetime.timestamp(datetime.now())
     config: Configuration = None
     media_index: int = 0
-    log = []
+    log: list = field(default_factory=list)
 
     def __post_init__(self):
         self.log.append(str(self.configuration_file))
@@ -212,7 +212,7 @@ class NoMedia(QWidget):
         super().__init__(parent)
         self.setLayout(QVBoxLayout())
         self.layout().addWidget(QLabel('No media, adding log:'))
-        for log in AppData.log[-10:]:
+        for log in AppData.log:
             self.layout().addWidget(QLabel(log))
 
 class ImageViewer(QLabel):
