@@ -210,9 +210,9 @@ class NoMedia(QWidget):
     def __init__(self, appdata: AppData, parent=None):
         super().__init__(parent)
         self.setLayout(QHBoxLayout())
-        self.layout().addItem(QLabel('No media, adding log:'))
+        self.layout().addWidget(QLabel('No media, adding log:'))
         for log in AppData.log[-10:]:
-            self.layout().addItem(QLabel(log))
+            self.layout().addWidget(QLabel(log))
 
 class ImageViewer(QLabel):
     def __init__(self, image: str, size: QSize, parent=None):
