@@ -126,7 +126,6 @@ class AppData:
                     config_dict['media'].append(files_update)
                     with open(self.configuration_file, 'w') as cfg:
                         yaml.dump(config_dict, cfg)
-                self.update()
             except Exception as e:
                 self.mes.append(str(e))
 
