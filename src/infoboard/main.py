@@ -97,11 +97,11 @@ class AppData:
         self.update()
 
     def update(self):
-        if os.path.getmtime(self.configuration_file) > self.config_last_update:
-            with open(self.configuration_file, 'r') as cfg:
-                config_dict = yaml.safe_load(cfg)
-                self.config = Configuration.from_dict(config_dict)
-            self.config_last_update = datetime.timestamp(datetime.now())
+        # if os.path.getmtime(self.configuration_file) > self.config_last_update:
+        with open(self.configuration_file, 'r') as cfg:
+            config_dict = yaml.safe_load(cfg)
+            self.config = Configuration.from_dict(config_dict)
+        self.config_last_update = datetime.timestamp(datetime.now())
 
         if self.config.auto_update == True:
             try:
