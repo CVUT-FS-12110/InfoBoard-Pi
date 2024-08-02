@@ -71,6 +71,13 @@ class Configuration:
                             new_media.append(Video(**element))
         self.media = new_media
 
+    @classmethod
+    def from_dict(cls, env):
+        return cls(**{
+            k: v for k, v in env.items()
+            if k in inspect.signature(cls).parameters
+        })
+
 @dataclass
 class AppData:
     configuration_file: str = None
@@ -84,13 +91,13 @@ class AppData:
                                                    'data', 'configuration.yaml')
         with open(self.configuration_file, 'r') as cfg:
             config_dict = yaml.safe_load(cfg)
-            self.config = Configuration(**config_dict)
+            self.config = Configuration.from_dict(config_dict)
 
     def update(self):
         if os.path.getmtime(self.configuration_file) > self.config_last_update:
             with open(self.configuration_file, 'r') as cfg:
                 config_dict = yaml.safe_load(cfg)
-                self.config = Configuration(**config_dict)
+                self.config = Configuration.from_dict(config_dict)
             self.config_last_update = datetime.timestamp(datetime.now())
 
         if self.config.auto_update == True:
