@@ -93,7 +93,6 @@ class AppData:
                                                    'data', 'configuration.yaml')
         with open(self.configuration_file, 'r') as cfg:
             config_dict = yaml.safe_load(cfg)
-            if not de
             self.config = Configuration.from_dict(config_dict)
         self.update()
 
