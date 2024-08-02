@@ -109,8 +109,7 @@ class AppData:
                     config_dict = yaml.safe_load(cfg)
                 config_dict['media'].append(files_update)
                 with open(self.configuration_file, 'w') as cfg:
-                    yaml.dump(config_dict, self.configuration_file)
-                self.update()
+                    yaml.dump(config_dict, cfg)
 
 
     def get_next(self) -> Union[Media, None]:
