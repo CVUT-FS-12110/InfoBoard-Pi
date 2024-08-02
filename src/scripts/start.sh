@@ -2,6 +2,9 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 HOME_DIR=$(eval "echo ~pi")
+if [ -f "$SCRIPT_DIR/automount.sh" ]; then
+  source "$SCRIPT_DIR/automount.sh"
+fi
 pgrep -f "X"
 if ! pgrep -f "X" &>/dev/null; then
   sudo chmod 777 /dev/tty7

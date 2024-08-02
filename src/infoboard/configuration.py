@@ -1,8 +1,24 @@
 import os
 import yaml
 from crontab import CronTab
+import psutil
+import glob
+import pathlib
+import sh
+
+def linux_block_devices():
+    for blockdev_stat in glob.glob('/sys/block/*/stat'):
+        blockdev_dir = blockdev_stat.rsplit('/', 1)[0]
+        found_parts = False
+        for part_stat in glob.glob(blockdev_dir + '/*/stat'):
+            yield blockdev_stat.rsplit('/', 2)[-2]
+            found_parts = True
+        if not found_parts:
+            yield blockdev_dir.rsplit('/', 1)[-1]
+
 
 print('InfoBoard Pi configuration script')
+print('================================= \n')
 
 SCRIPT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 ROOT_FOLDER = os.path.realpath(os.path.join(SCRIPT_FOLDER, '..', '..'))
@@ -15,11 +31,73 @@ if not os.path.isfile(CFG_FILE):
 with open(CFG_FILE, 'r') as cfg_file:
     cfg = yaml.safe_load(cfg_file)
 
+
 data_cfg_file = cfg.get('configuration_file')
 
 if data_cfg_file is None:
     print('Data configuration file url doesn\'t found in the config.yaml, fallback to the default url ./data')
     data_cfg_file = os.path.join(ROOT_FOLDER, 'data', 'configuration.yaml')
+
+data_cfg_file = os.path.abspath(data_cfg_file)
+
+if cfg.get('auto_mount') == True:
+    if os.path.commonpath([data_cfg_file, ROOT_FOLDER]) == ROOT_FOLDER:
+        print('\nauto_mount is set to true, data configuration file has to be pointed outside of the infoboard reopository')
+        exit()
+
+    all_block_devices = set(linux_block_devices())
+    used_block_devices = set((p.device.replace('/dev/', '') for p in psutil.disk_partitions()))
+    unused_block_devices = all_block_devices - used_block_devices
+    used_disk_roots = set([device[:3] for device in used_block_devices if device.startswith('sd')])
+    available = [f'/dev/{device}' for device in unused_block_devices if
+                 device not in used_disk_roots and device.startswith('sd')]
+
+    if not available:
+        print('Automount set, but the available drive is not detected, '
+              'insert the usb drive and make sure it is not mounted.')
+        exit()
+    print('Automount set, select the device for automount:\n')
+
+    while True:
+        for idx, a_device in enumerate(available):
+            print(f'[{idx}] {a_device}')
+
+        s_device = input('Choose the device for automount: ')
+        try:
+            s_device = int(s_device)
+            if s_device < 0 or s_device >= len(available):
+                raise ValueError()
+
+        except ValueError:
+            print(f'\nIncorrect input, write number in range 0-{len(available) - 1}, or Ctrl+Z for exit')
+            continue
+
+        automount_device = available[s_device]
+        break
+
+    while True:
+        s_path = input(f'Choose the folder for mounting, (default: {os.path.dirname(data_cfg_file)}: ')
+        if not s_path:
+            s_path = os.path.dirname(data_cfg_file)
+        try:
+            pathlib.Path(s_path).mkdir(parents=True, exist_ok=True)
+        except ValueError:
+            print(f'\nIncorrect directory, try it again or Ctrl+Z for exit')
+            continue
+        os.chmod(s_path, 0o777)
+        automount_path = s_path
+        break
+
+if cfg.get('auto_mount') == True:
+    print(f'Automount set, mounting {automount_device} to {automount_path}...')
+    mount = sh.Command('mount')
+    mount(automount_device, automount_path)
+
+    with open(f'{ROOT_FOLDER}/automount.sh', "w") as f:
+        f.write(f"#!/bin/bash\n\nsudo mount {automount_device} {automount_path}")
+else:
+    with open(f'{ROOT_FOLDER}/automount.sh', "w") as f:
+        f.write(f"#!/bin/bash")
 
 data_cfg_file = os.path.abspath(data_cfg_file)
 auto_power_off = cfg.get('auto_power_off')
