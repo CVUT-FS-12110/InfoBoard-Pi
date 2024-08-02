@@ -103,28 +103,32 @@ class AppData:
             self.config_last_update = datetime.timestamp(datetime.now())
 
         if self.config.auto_update == True:
-            from os import listdir
-            from os.path import isfile, join
-            onlyfiles = [os.path.realpath(os.path.join(self.config.default_media_dir, f)) for f in os.listdir(self.config.default_media_dir) if os.path.isfile(os.path.join(self.config.default_media_dir, f))]
-            self.log.append(str(onlyfiles))
-            cfg_urls = [media.url for media in self.config.media]
-            self.log.append(str(cfg_urls))
-            new_files = [f for f in onlyfiles if f not in cfg_urls]
-            self.log.append(str(new_files))
-            files_update = []
-            for new_file in new_files:
-                mime = mimetypes.guess_type(new_file)[0]
-                if mime is not None:
-                    if mime.startswith('image') or mime.startswith('video'):
-                        files_update.append({'url': new_file})
-            self.log.append(str(files_update))
-            if files_update:
-                with open(self.configuration_file, 'r') as cfg:
-                    config_dict = yaml.safe_load(cfg)
-                config_dict['media'].append(files_update)
-                with open(self.configuration_file, 'w') as cfg:
-                    yaml.dump(config_dict, cfg)
-            self.update()
+            try:
+                from os import listdir
+                from os.path import isfile, join
+                onlyfiles = [os.path.realpath(os.path.join(self.config.default_media_dir, f)) for f in os.listdir(self.config.default_media_dir) if os.path.isfile(os.path.join(self.config.default_media_dir, f))]
+                self.log.append(str(onlyfiles))
+                cfg_urls = [media.url for media in self.config.media]
+                self.log.append(str(cfg_urls))
+                new_files = [f for f in onlyfiles if f not in cfg_urls]
+                self.log.append(str(new_files))
+                files_update = []
+                for new_file in new_files:
+                    mime = mimetypes.guess_type(new_file)[0]
+                    if mime is not None:
+                        if mime.startswith('image') or mime.startswith('video'):
+                            files_update.append({'url': new_file})
+                self.log.append(str(files_update))
+                if files_update:
+                    with open(self.configuration_file, 'r') as cfg:
+                        config_dict = yaml.safe_load(cfg)
+                    config_dict['media'].append(files_update)
+                    with open(self.configuration_file, 'w') as cfg:
+                        yaml.dump(config_dict, cfg)
+                self.update()
+            except Exception as e:
+                self.log.append(str(e))
+
 
 
     def get_next(self) -> Union[Media, None]:
