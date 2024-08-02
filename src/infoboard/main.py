@@ -84,10 +84,10 @@ class AppData:
     config_last_update: float = datetime.timestamp(datetime.now())
     config: Configuration = None
     media_index: int = 0
-    log: list = field(default_factory=list)
+    mes: list = field(default_factory=list)
 
     def __post_init__(self):
-        self.log.append(str(self.configuration_file))
+        self.mes.append(str(self.configuration_file))
         if self.configuration_file is None:
             self.configuration_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..',
                                                    'data', 'configuration.yaml')
@@ -108,18 +108,18 @@ class AppData:
                 from os import listdir
                 from os.path import isfile, join
                 onlyfiles = [os.path.realpath(os.path.join(self.config.default_media_dir, f)) for f in os.listdir(self.config.default_media_dir) if os.path.isfile(os.path.join(self.config.default_media_dir, f))]
-                self.log.append(str(onlyfiles))
+                self.mes.append(str(onlyfiles))
                 cfg_urls = [media.url for media in self.config.media]
-                self.log.append(str(cfg_urls))
+                self.mes.append(str(cfg_urls))
                 new_files = [f for f in onlyfiles if f not in cfg_urls]
-                self.log.append(str(new_files))
+                self.mes.append(str(new_files))
                 files_update = []
                 for new_file in new_files:
                     mime = mimetypes.guess_type(new_file)[0]
                     if mime is not None:
                         if mime.startswith('image') or mime.startswith('video'):
                             files_update.append({'url': new_file})
-                self.log.append(str(files_update))
+                self.mes.append(str(files_update))
                 if files_update:
                     with open(self.configuration_file, 'r') as cfg:
                         config_dict = yaml.safe_load(cfg)
@@ -128,7 +128,7 @@ class AppData:
                         yaml.dump(config_dict, cfg)
                 self.update()
             except Exception as e:
-                self.log.append(str(e))
+                self.mes.append(str(e))
 
 
 
@@ -212,7 +212,7 @@ class NoMedia(QWidget):
         super().__init__(parent)
         self.setLayout(QVBoxLayout())
         self.layout().addWidget(QLabel('No media, adding log:'))
-        for log in AppData.log:
+        for log in AppData.mes:
             self.layout().addWidget(QLabel(log))
 
 class ImageViewer(QLabel):
