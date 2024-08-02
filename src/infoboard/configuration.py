@@ -9,15 +9,11 @@ import sh
 def linux_block_devices():
     for blockdev_stat in glob.glob('/sys/block/*/stat'):
         blockdev_dir = blockdev_stat.rsplit('/', 1)[0]
-        found_parts = False
         for part_stat in glob.glob(blockdev_dir + '/*/stat'):
-            yield blockdev_stat.rsplit('/', 2)[-2]
-            found_parts = True
-        if not found_parts:
-            yield blockdev_dir.rsplit('/', 1)[-1]
+            yield f'/dev/{part_stat.rsplit("/", 2)[-2]}'
 
 
-print('InfoBoard Pi configuration script')
+print('\nInfoBoard Pi configuration script')
 print('================================= \n')
 
 SCRIPT_FOLDER = os.path.dirname(os.path.abspath(__file__))
@@ -46,11 +42,9 @@ if cfg.get('auto_mount') == True:
         exit()
 
     all_block_devices = set(linux_block_devices())
-    used_block_devices = set((p.device.replace('/dev/', '') for p in psutil.disk_partitions()))
+    used_block_devices = set((p.device for p in psutil.disk_partitions()))
     unused_block_devices = all_block_devices - used_block_devices
-    used_disk_roots = set([device[:3] for device in used_block_devices if device.startswith('sd')])
-    available = [f'/dev/{device}' for device in unused_block_devices if
-                 device not in used_disk_roots and device.startswith('sd')]
+    available = [device for device in unused_block_devices if device.startswith('/dev/sd')]
 
     if not available:
         print('Automount set, but the available drive is not detected, '
