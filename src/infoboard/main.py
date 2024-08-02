@@ -87,6 +87,7 @@ class AppData:
     log = []
 
     def __post_init__(self):
+        self.log.append(str(self.configuration_file))
         if self.configuration_file is None:
             self.configuration_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..',
                                                    'data', 'configuration.yaml')
