@@ -212,7 +212,7 @@ class NoMedia(QWidget):
         super().__init__(parent)
         self.setLayout(QVBoxLayout())
         self.layout().addWidget(QLabel('No media, adding log:'))
-        for log in AppData.mes:
+        for log in appdata.mes:
             self.layout().addWidget(QLabel(log))
 
 class ImageViewer(QLabel):
