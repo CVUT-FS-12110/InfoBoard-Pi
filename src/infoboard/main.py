@@ -84,6 +84,7 @@ class AppData:
     config_last_update: float = datetime.timestamp(datetime.now())
     config: Configuration = None
     media_index: int = 0
+    log = []
 
     def __post_init__(self):
         if self.configuration_file is None:
@@ -92,6 +93,7 @@ class AppData:
         with open(self.configuration_file, 'r') as cfg:
             config_dict = yaml.safe_load(cfg)
             self.config = Configuration.from_dict(config_dict)
+        self.update()
 
     def update(self):
         if os.path.getmtime(self.configuration_file) > self.config_last_update:
@@ -104,20 +106,25 @@ class AppData:
             from os import listdir
             from os.path import isfile, join
             onlyfiles = [os.path.realpath(os.path.join(self.config.default_media_dir, f)) for f in os.listdir(self.config.default_media_dir) if os.path.isfile(os.path.join(self.config.default_media_dir, f))]
+            self.log.append(str(onlyfiles))
             cfg_urls = [media.url for media in self.config.media]
+            self.log.append(str(cfg_urls))
             new_files = [f for f in onlyfiles if f not in cfg_urls]
+            self.log.append(str(new_files))
             files_update = []
             for new_file in new_files:
                 mime = mimetypes.guess_type(new_file)[0]
                 if mime is not None:
                     if mime.startswith('image') or mime.startswith('video'):
                         files_update.append({'url': new_file})
+            self.log.append(str(files_update))
             if files_update:
                 with open(self.configuration_file, 'r') as cfg:
                     config_dict = yaml.safe_load(cfg)
                 config_dict['media'].append(files_update)
                 with open(self.configuration_file, 'w') as cfg:
                     yaml.dump(config_dict, cfg)
+            self.update()
 
 
     def get_next(self) -> Union[Media, None]:
@@ -191,14 +198,17 @@ class MainWindow(QMainWindow):
     def no_media(self,):
         self.setGeometry(self.geometry_info)
         # self.current_image = media.url
-        widget = NoMedia()
+        widget = NoMedia(self.app_data)
         self.setCentralWidget(widget)
         QTimer.singleShot(60 * 1000, self.next_media)
 
-class NoMedia(QLabel):
-    def __init__(self, parent=None):
+class NoMedia(QWidget):
+    def __init__(self, appdata: AppData, parent=None):
         super().__init__(parent)
-        self.setText('NO MEDIA')
+        self.setLayout(QHBoxLayout())
+        self.layout().addItem(QLabel('No media, adding log:'))
+        for log in AppData.log[-10:]:
+            self.layout().addItem(QLabel(log))
 
 class ImageViewer(QLabel):
     def __init__(self, image: str, size: QSize, parent=None):
