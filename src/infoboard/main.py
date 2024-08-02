@@ -3,6 +3,7 @@ import sys
 import mimetypes
 import inspect
 import yaml
+from pathlib import Path
 
 from typing import Union
 
@@ -14,7 +15,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 
-
+SCRIPT_FOLDER = os.path.dirname(os.path.abspath(__file__))
+ROOT_FOLDER = os.path.realpath(os.path.join(SCRIPT_FOLDER, '..', '..'))
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'data')
 SLIDE_TIME = 60
 
@@ -114,6 +116,11 @@ class MainWindow(QMainWindow):
         self.videos = []
         self.setCursor(Qt.BlankCursor)
         self.setGeometry(self.geometry_info)
+        QTimer.singleShot(1000, self.run_info)
+
+    def run_info(self):
+        Path(f'{ROOT_FOLDER}/.alive').touch()
+        QTimer.singleShot(1000, self.run_info)
 
     def next_media(self):
         self.app_data.update()
