@@ -1,5 +1,5 @@
 configuration_file: point_to_the_data_configurationfile
-auto_update_data_config: true
+auto: true
 auto_start: true
 auto_power_off: '21:00'
 

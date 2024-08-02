@@ -8,7 +8,7 @@ echo "--------------------------------"
 echo ""
 
 if [ ! -f "$PWD"/src/infoboard/configuration.py ]; then
-  echo "Infoboard Pi source code doesn't found, start thi script inside the repository directory."
+  echo "Infoboard Pi source code doesn't found, start this script inside the repository directory."
   return
 else
   echo "Infoboard Pi source code found"

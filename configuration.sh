@@ -23,7 +23,7 @@ if [ ! -d "$PYENV_ROOT/versions/infoboard_venv" ]; then
 
 fi
 
-sudo "${PYENV_ROOT}"/versions/infoboard_venv/bin/python ./src/infoboard/configuration.py
+sudo "${PYENV_ROOT}"/versions/infoboard_venv/bin/python ./src/infoboard/reconfiguration.py
 
 
 
