@@ -66,7 +66,7 @@ if not os.path.isfile(data_cfg_file):
 
     cfg_template = {'default_slide_time': 60,
                     'auto_update': cfg.get('auto_update_data_config', True),
-                    'default_media_dir': os.path.join(ROOT_FOLDER, 'data'),
+                    'default_media_dir':  os.path.realpath(os.path.dirname(data_cfg_file)),
                     'media': [{'url': '', 'slide_time': 60}]
                     }
     with open(data_cfg_file, 'w') as cfg_file:
