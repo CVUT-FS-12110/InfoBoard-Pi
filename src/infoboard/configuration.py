@@ -120,12 +120,29 @@ if not os.path.isfile(data_cfg_file):
         os.makedirs((os.path.dirname(data_cfg_file)))
 
     cfg_template = {'default_slide_time': 60,
+                    'auto_update': cfg.get('auto_update_data_config', True),
                     'default_media_dir': os.path.join(ROOT_FOLDER, 'data'),
                     'media': [{'url': '', 'slide_time': 60}]
                     }
     with open(data_cfg_file, 'w') as cfg_file:
         yaml.dump(cfg_template, cfg_file)
+else:
+    with open(data_cfg_file, 'r') as cfg_file:
+        cfg_data = yaml.safe_load(data_cfg_file)
+    updated = False
+    if 'auto_update_data_config' in cfg.keys():
+        cfg_data['auto_update'] = cfg.get('auto_update_data_config')
+        updated = True
+    if 'default_slide_time' in cfg.keys():
+        cfg_data['default_slide_time'] = cfg.get('default_slide_time')
+        updated = False
+    if updated:
+        print('Updating data config file ...')
+        with open(data_cfg_file, 'w') as cfg_file:
+            yaml.dump(cfg_data, cfg_file)
 
+
+print('Setting cron jobs ...')
 cron = CronTab(user='root')
 cron.remove_all(comment='infoboard-pi')
 job = cron.new(command=f'/bin/bash {ROOT_FOLDER}/src/scripts/checker.sh > /var/log/infoboard.log 2>&1', comment='infoboard-pi')

@@ -58,6 +58,7 @@ class Configuration:
                     element_media = Media(os.path.join(self.default_media_dir, url))
                     element.update({'url': element_media.url})
                 if element_media.correct():
+                    element_media.url = os.path.realpath(element_media.url)
                     mime = mimetypes.guess_type(element_media.url)[0]
                     if mime is not None:
                         if mime.startswith('image'):
@@ -90,6 +91,27 @@ class AppData:
                 config_dict = yaml.safe_load(cfg)
                 self.config = Configuration(**config_dict)
             self.config_last_update = datetime.timestamp(datetime.now())
+
+        if self.config.get['auto_update'] == True:
+            from os import listdir
+            from os.path import isfile, join
+            onlyfiles = [os.path.realpath(os.path.join(self.config.default_media_dir, f)) for f in os.listdir(self.config.default_media_dir) if os.path.isfile(os.path.join(self.config.default_media_dir, f))]
+            cfg_urls = [media.url for media in self.config.media]
+            new_files = [f for f in onlyfiles if f not in cfg_urls]
+            files_update = []
+            for new_file in new_files:
+                mime = mimetypes.guess_type(new_file)[0]
+                if mime is not None:
+                    if mime.startswith('image') or mime.startswith('video'):
+                        files_update.append({'url': new_file})
+            if files_update:
+                with open(self.configuration_file, 'r') as cfg:
+                    config_dict = yaml.safe_load(cfg)
+                config_dict['media'].append(files_update)
+                with open(self.configuration_file, 'w') as cfg:
+                    yaml.dump(config_dict, self.configuration_file)
+                self.update()
+
 
     def get_next(self) -> Union[Media, None]:
         if not self.config.media:
