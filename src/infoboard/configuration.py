@@ -88,7 +88,7 @@ if cfg.get('auto_mount') == True:
     mount(automount_device, automount_path)
 
     with open(f'{ROOT_FOLDER}/automount.sh', "w") as f:
-        f.write(f"#!/bin/bash\n\nsudo mount {automount_device} {automount_path}")
+        f.write(f"#!/bin/bash\n\nsudo mount {automount_device} {automount_path}\nchmod -R 755 {automount_path}")
 else:
     with open(f'{ROOT_FOLDER}/automount.sh', "w") as f:
         f.write(f"#!/bin/bash")
