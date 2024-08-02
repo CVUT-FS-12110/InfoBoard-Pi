@@ -47,6 +47,7 @@ class Configuration:
     default_slide_time: int = SLIDE_TIME
     default_media_dir: str = DATA_DIR
     media: list[Union[Media, dict]] = field(default_factory=list)
+    auto_update: bool = False
 
     def __post_init__(self):
         new_media = []
@@ -92,7 +93,7 @@ class AppData:
                 self.config = Configuration(**config_dict)
             self.config_last_update = datetime.timestamp(datetime.now())
 
-        if self.config.get['auto_update'] == True:
+        if self.config.auto_update == True:
             from os import listdir
             from os.path import isfile, join
             onlyfiles = [os.path.realpath(os.path.join(self.config.default_media_dir, f)) for f in os.listdir(self.config.default_media_dir) if os.path.isfile(os.path.join(self.config.default_media_dir, f))]
