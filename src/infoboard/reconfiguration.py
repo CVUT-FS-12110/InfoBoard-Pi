@@ -73,7 +73,7 @@ if not os.path.isfile(data_cfg_file):
         yaml.dump(cfg_template, cfg_file)
 else:
     with open(data_cfg_file, 'r') as cfg_file:
-        cfg_data = yaml.safe_load(data_cfg_file)
+        cfg_data = yaml.safe_load(cfg_file)
     updated = False
     if 'auto_update_data_config' in cfg.keys():
         cfg_data['auto_update'] = cfg.get('auto_update_data_config')
