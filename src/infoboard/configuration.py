@@ -68,6 +68,7 @@ if cfg.get('auto_mount') == True:
 
     while True:
         s_path = input(f'Choose the folder for mounting, (default: {default_media_dir}: ')
+        print(s_path)
         if not s_path:
             s_path = os.path.dirname(default_media_dir)
         try:
@@ -75,8 +76,10 @@ if cfg.get('auto_mount') == True:
         except ValueError:
             print(f'\nIncorrect directory, try it again or Ctrl+Z for exit')
             continue
+        print(s_path)
         os.chmod(s_path, 0o777)
         automount_path = s_path
+        print(automount_path)
         break
 
 if cfg.get('auto_mount') == True:
