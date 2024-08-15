@@ -103,7 +103,7 @@ cron = CronTab(user='root')
 cron.remove_all(comment='infoboard-pi')
 job = cron.new(command=f'/bin/bash {ROOT_FOLDER}/src/scripts/checker.sh > /var/log/infoboard.log 2>&1', comment='infoboard-pi')
 job.minute.every(1)
-job = cron.new(command=f'/bin/bash {ROOT_FOLDER}/src/scripts/checker_server.sh > /var/log/infoboard.log 2>&1', comment='infoboard-pi')
+job = cron.new(command=f'/bin/bash {ROOT_FOLDER}/src/scripts/checke_server.sh > /var/log/infoboard.log 2>&1', comment='infoboard-pi')
 job.minute.every(1)
 if auto_power_off is not None:
     job = cron.new(command=f'poweroff',
