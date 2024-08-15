@@ -2,5 +2,6 @@
 maxUploadSize = 500
 [global]
 dataFrameSerialization = "legacy"
+
 [browser]
 gatherUsageStats = false
