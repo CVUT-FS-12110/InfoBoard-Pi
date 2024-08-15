@@ -39,15 +39,16 @@ if ! hash pyenv; then
 fi
 
 if [ ! -d "$PYENV_ROOT/versions/infoboard_venv" ]; then
-   echo "Creating virtual environment ..."
-   if [ ! -d "$PYENV_ROOT/versions/3.9.2" ]; then
-      echo "Installing Python 3.9.2 ..."
-      sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
-      libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
-      libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
-      pyenv install 3.9.2
-   fi
-   pyenv virtualenv 3.9.2 infoboard_venv
+#  version=$(python -V 2>&1 | grep -Po '(?<=Python )(.+)')
+#   echo "Creating virtual environment ..."
+#   if [ ! -d "$PYENV_ROOT/versions/$version" ]; then
+#      echo "Installing Python $version ..."
+#      sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
+#      libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
+#      libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
+#      pyenv install "$version"
+#   fi
+   pyenv virtualenv --system-site-packages --python=/usr/bin/python3 infoboard_venv
 fi
 
 echo "Activation of virtual environment"
