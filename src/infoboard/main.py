@@ -90,7 +90,7 @@ class AppData:
         self.mes.append(str(self.configuration_file))
         if self.configuration_file is None:
             self.configuration_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..',
-                                                   'data', 'configuration.yaml')
+                                                   'data', 'config.yaml')
         with open(self.configuration_file, 'r') as cfg:
             config_dict = yaml.safe_load(cfg)
             self.config = Configuration.from_dict(config_dict)
