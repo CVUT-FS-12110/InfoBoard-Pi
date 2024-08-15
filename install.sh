@@ -54,9 +54,9 @@ fi
 
 #echo "Activation of virtual environment"
 echo "Upgrading pip and setuptools..."
-.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python3 -m pip install --upgrade pip
 echo "Installing requirements ..."
-.venv/bin/python -m pip install -r "$PWD"/requirements.txt
+.venv/bin/python3 -m pip install -r "$PWD"/requirements.txt
 
 if ! hash vlc; then
   echo "Installing vlc ..."
@@ -66,7 +66,7 @@ else
 fi
 
 echo "Starting python install script ..."
-sudo .venv/bin/python ./src/infoboard/configuration.py
+sudo .venv/bin/python3 ./src/infoboard/configuration.py
 
 
 
