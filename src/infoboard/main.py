@@ -63,12 +63,12 @@ class Configuration:
                     mime = mimetypes.guess_type(element_media.url)[0]
                     if mime is not None:
                         if mime.startswith('image'):
-                            img = Image(**element)
+                            img = Image.from_dict(element)
                             if img.slide_time is None:
                                 img.slide_time = self.default_slide_time
                             new_media.append(img)
                         elif mime.startswith('video'):
-                            new_media.append(Video(**element))
+                            new_media.append(Video.from_dict(element))
         self.media = new_media
 
     @classmethod
