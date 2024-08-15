@@ -23,7 +23,10 @@ else
 fi
 
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$PYENV_    ROOT/bin:$PATH"
+
+echo "Creating Qt5 dev tools..."
+sudo apt install -y qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
 
 if ! hash pyenv; then
   echo "Installing pyenv ..."
@@ -48,7 +51,7 @@ if [ ! -d "$PYENV_ROOT/versions/infoboard_venv" ]; then
 fi
 
 echo "Activation of virtual environment"
-echo "Upgrading pip ..."
+echo "Upgrading pip and setuptools..."
 "${PYENV_ROOT}"/versions/infoboard_venv/bin/python -m pip install --upgrade pip
 echo "Installing requirements ..."
 "${PYENV_ROOT}"/versions/infoboard_venv/bin/python -m pip install -r "$PWD"/requirements.txt
