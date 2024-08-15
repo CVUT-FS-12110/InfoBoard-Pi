@@ -10,7 +10,7 @@ if ! pgrep -f "X" &>/dev/null; then
   sudo chmod 777 /dev/tty7
   startx "$SCRIPT_DIR"/../../.venv/bin/python "$SCRIPT_DIR"/../infoboard/main.py -- vt7
 else
-  sudo -u pi QT_QPA_PLATFORM=offscreen "$SCRIPT_DIR"/../../.venv/bin/python  "$SCRIPT_DIR"/../infoboard/main.py
+  sudo -u vitrina12118 QT_QPA_PLATFORM=offscreen "$SCRIPT_DIR"/../../.venv/bin/python  "$SCRIPT_DIR"/../infoboard/main.py
 fi
 
 
