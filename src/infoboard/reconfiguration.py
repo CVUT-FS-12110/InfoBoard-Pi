@@ -80,7 +80,7 @@ if not os.path.isfile(DATA_CFG_FILE):
                                }
                     }
     with open(DATA_CFG_FILE, 'w') as cfg_file:
-        yaml.dump(DATA_CFG_FILE, cfg_file)
+        yaml.dump(cfg_template, cfg_file)
 else:
     with open(DATA_CFG_FILE, 'r') as cfg_file:
         cfg_data = yaml.safe_load(cfg_file)
