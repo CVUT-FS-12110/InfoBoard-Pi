@@ -1,8 +1,7 @@
-pyqt5
-streamlit
 pyyaml
 python-crontab
 psutil
 sh
-streamlit_authenticator
-streamlit_float
+
+
+

@@ -57,6 +57,9 @@ echo "Upgrading pip and setuptools..."
 .venv/bin/python3 -m pip install --upgrade pip
 echo "Installing requirements ..."
 .venv/bin/python3 -m pip install -r "$PWD"/requirements.txt
+echo "Installing streamlit server ..."
+.venv/bin/python3 -m pip install -r "$PWD"/requirements-streamlit.txt
+.venv/bin/python3 -m pip install --no-deps streamlit streamlit_authenticator streamlit_float
 
 if ! hash vlc; then
   echo "Installing vlc ..."
