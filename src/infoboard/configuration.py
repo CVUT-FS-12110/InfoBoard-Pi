@@ -67,10 +67,10 @@ if cfg.get('auto_mount') == True:
         break
 
     while True:
-        s_path = input(f'Choose the folder for mounting, (default: {default_media_dir}: ')
+        s_path = input(f'Choose the folder for mounting, (default: {default_media_dir}): ')
         print(s_path)
         if not s_path:
-            s_path = os.path.dirname(default_media_dir)
+            s_path = default_media_dir
         try:
             pathlib.Path(s_path).mkdir(parents=True, exist_ok=True)
         except ValueError:
