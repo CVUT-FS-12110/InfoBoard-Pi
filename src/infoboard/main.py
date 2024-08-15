@@ -223,14 +223,8 @@ class ImageViewer(QLabel):
 class VideoPlayer(QVideoWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.media_widget = QMediaPlayer()
 
-    def play(self, uri: str, change_slot, error_slot):
-        self.media_widget.setMedia(QMediaContent(QUrl.fromLocalFile(uri)))
-        self.media_widget.setVideoOutput(self)
-        self.media_widget.stateChanged.connect(change_slot)
-        self.media_widget.error.connect(error_slot)
-        self.media_widget.play()
+
 
 if __name__ == '__main__':
 
