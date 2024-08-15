@@ -188,6 +188,8 @@ class MainWindow(QMainWindow):
         print(media.url)
         process.start(f"vlc --fullscreen {media.url} vlc://quit")
         process.waitForFinished(-1)
+        print(process.readAllStandardOutput())
+        print(process.readAllStandardError())
         process.close()
         self.video_change_state(0)
 
