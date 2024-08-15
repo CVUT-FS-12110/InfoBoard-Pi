@@ -57,7 +57,7 @@ echo "Installing requirements ..."
 .venv/bin/python3 -m pip install -r "$PWD"/requirements.txt
 echo "Installing streamlit server ..."
 .venv/bin/python3 -m pip install -r "$PWD"/requirements-streamlit.txt
-.venv/bin/python3 -m pip install --no-deps streamlit streamlit_authenticator streamlit_float
+.venv/bin/python3 -m pip install --no-deps streamlit extra-streamlit-components streamlit_float
 .venv/bin/python3 -m pip install streamlit_authenticator streamlit_float
 
 if ! hash vlc; then
