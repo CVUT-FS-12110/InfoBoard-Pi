@@ -28,19 +28,19 @@ export PATH="$PYENV_    ROOT/bin:$PATH"
 echo "Creating Qt5 dev tools..."
 sudo apt install -y qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
 
-if ! hash pyenv; then
-  echo "Installing pyenv ..."
-  sudo apt update
-  sudo apt install -y curl
-  curl https://pyenv.run | bash
-  eval "$(pyenv init --path)"
-  eval "$(pyenv virtualenv-init -)"
-  eval "$(pyenv init -)"
-fi
+#if ! hash pyenv; then
+#  echo "Installing pyenv ..."
+#  sudo apt update
+#  sudo apt install -y curl
+#  curl https://pyenv.run | bash
+#  eval "$(pyenv init --path)"
+#  eval "$(pyenv virtualenv-init -)"
+#  eval "$(pyenv init -)"
+#fi
 
-if [ ! -d "$PYENV_ROOT/versions/infoboard_venv" ]; then
+if [ ! -f ".venv/bin/python" ]; then
 #  version=$(python -V 2>&1 | grep -Po '(?<=Python )(.+)')
-#   echo "Creating virtual environment ..."
+   echo "Creating virtual environment ..."
 #   if [ ! -d "$PYENV_ROOT/versions/$version" ]; then
 #      echo "Installing Python $version ..."
 #      sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
@@ -48,15 +48,15 @@ if [ ! -d "$PYENV_ROOT/versions/infoboard_venv" ]; then
 #      libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
 #      pyenv install "$version"
 #   fi
-   sudo apt install -y python3-full
-   pyenv virtualenv --system-site-packages --python=/usr/bin/python3 infoboard_venv
+   python3 -m venv .venv
+#   pyenv virtualenv --system-site-packages --python=/usr/bin/python3 infoboard_venv
 fi
 
-echo "Activation of virtual environment"
+#echo "Activation of virtual environment"
 echo "Upgrading pip and setuptools..."
-"${PYENV_ROOT}"/versions/infoboard_venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install --upgrade pip
 echo "Installing requirements ..."
-"${PYENV_ROOT}"/versions/infoboard_venv/bin/python -m pip install -r "$PWD"/requirements.txt
+.venv/bin/python -m pip install -r "$PWD"/requirements.txt
 
 if ! hash vlc; then
   echo "Installing vlc ..."
@@ -66,7 +66,7 @@ else
 fi
 
 echo "Starting python install script ..."
-sudo "${PYENV_ROOT}"/versions/infoboard_venv/bin/python ./src/infoboard/configuration.py
+sudo .venv/bin/python ./src/infoboard/configuration.py
 
 
 
