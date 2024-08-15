@@ -185,13 +185,14 @@ class MainWindow(QMainWindow):
            # video_widget.play(self.current_video, self.video_change_state, self.show_image)
         process = QProcess()
         # print(f'play video {self.current_video}')
+        print(media.url)
         process.start(f"vlc --fullscreen {media.url} vlc://quit")
         process.waitForFinished(-1)
         process.close()
         self.video_change_state(0)
 
     def start_show(self):
-        QTimer.singleShot(200, self.next_media)
+        QTimer.singleShot(2000, self.next_media)
 
     def video_change_state(self, state):
         if state == 0:
