@@ -103,33 +103,31 @@ class AppData:
             self.config = Configuration.from_dict(config_dict)
         self.config_last_update = datetime.timestamp(datetime.now())
 
-        if self.config.auto_update == True:
-            try:
-                from os import listdir
-                from os.path import isfile, join
-                onlyfiles = [os.path.realpath(os.path.join(self.config.default_media_dir, f)) for f in os.listdir(self.config.default_media_dir) if os.path.isfile(os.path.join(self.config.default_media_dir, f))]
-                self.mes.append(str(onlyfiles))
-                cfg_urls = [media.url for media in self.config.media]
-                self.mes.append(str(cfg_urls))
-                new_files = [f for f in onlyfiles if f not in cfg_urls]
-                self.mes.append(str(new_files))
-                files_update = []
-                for new_file in new_files:
-                    mime = mimetypes.guess_type(new_file)[0]
-                    if mime is not None:
-                        if mime.startswith('image') or mime.startswith('video'):
-                            files_update.append({'url': new_file})
-                self.mes.append(str(files_update))
-                if files_update:
-                    with open(self.configuration_file, 'r') as cfg:
-                        config_dict = yaml.safe_load(cfg)
-                    config_dict['media'] += files_update
-                    with open(self.configuration_file, 'w') as cfg:
-                        yaml.dump(config_dict, cfg)
-            except Exception as e:
-                self.mes.append(str(e))
-
-
+        # if self.config.auto_update == True:
+        #     try:
+        #         from os import listdir
+        #         from os.path import isfile, join
+        #         onlyfiles = [os.path.realpath(os.path.join(self.config.default_media_dir, f)) for f in os.listdir(self.config.default_media_dir) if os.path.isfile(os.path.join(self.config.default_media_dir, f))]
+        #         self.mes.append(str(onlyfiles))
+        #         cfg_urls = [media.url for media in self.config.media]
+        #         self.mes.append(str(cfg_urls))
+        #         new_files = [f for f in onlyfiles if f not in cfg_urls]
+        #         self.mes.append(str(new_files))
+        #         files_update = []
+        #         for new_file in new_files:
+        #             mime = mimetypes.guess_type(new_file)[0]
+        #             if mime is not None:
+        #                 if mime.startswith('image') or mime.startswith('video'):
+        #                     files_update.append({'url': new_file})
+        #         self.mes.append(str(files_update))
+        #         if files_update:
+        #             with open(self.configuration_file, 'r') as cfg:
+        #                 config_dict = yaml.safe_load(cfg)
+        #             config_dict['media'] += files_update
+        #             with open(self.configuration_file, 'w') as cfg:
+        #                 yaml.dump(config_dict, cfg)
+        #     except Exception as e:
+        #         self.mes.append(str(e))
 
     def get_next(self) -> Union[Media, None]:
         if not self.config.media:

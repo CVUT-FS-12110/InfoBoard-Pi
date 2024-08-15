@@ -1,5 +1,0 @@
-default_media_dir: /home/cyril/Workspace/InfoBoard-Pi/data
-default_slide_time: 60
-media:
-- slide_time: 60
-  url: ''
