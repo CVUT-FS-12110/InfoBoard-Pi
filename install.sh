@@ -7,7 +7,7 @@ echo "--------------------------------"
 echo ""
 
 if [ ! -f "$PWD"/src/infoboard/configuration.py ]; then
-  echo "Infoboard Pi source code doesn't found, start thi script inside the repository directory."
+  echo "Infoboard Pi source code doesn't found, start the script inside the repository directory."
   return
 else
   echo "Infoboard Pi source code found"
@@ -22,11 +22,9 @@ else
   echo "Starting installation"
 fi
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_    ROOT/bin:$PATH"
-
-echo "Creating Qt5 dev tools..."
+echo "Creating Qt5 and dev tools..."
 sudo apt-get install build-essential cmake python3-dev cmake
+sudo apt install python3-pyqt5 python3-pyqt5.qtmultimedia
 
 #if ! hash pyenv; then
 #  echo "Installing pyenv ..."

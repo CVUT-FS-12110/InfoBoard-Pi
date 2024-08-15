@@ -15,11 +15,11 @@ else
 fi
 
 echo "Starting python uninstall script ..."
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+
 
 sudo "${PYENV_ROOT}"/versions/infoboard_venv/bin/python ./src/infoboard/remove.py
 sudo killall python
+
 
 
 
