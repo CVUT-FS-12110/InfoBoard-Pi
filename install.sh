@@ -48,7 +48,7 @@ if [ ! -f ".venv/bin/python" ]; then
 #      libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
 #      pyenv install "$version"
 #   fi
-   python3 -m venv .venv
+   python3 -m venv --system-site-packages .venv
 #   pyenv virtualenv --system-site-packages --python=/usr/bin/python3 infoboard_venv
 fi
 
@@ -56,7 +56,7 @@ fi
 echo "Upgrading pip and setuptools..."
 .venv/bin/python -m pip install --upgrade pip
 echo "Installing requirements ..."
-.venv/bin/python -m pip install -r "$PWD"/requirements.txt
+.venv/bin/python -m pip install -I -r "$PWD"/requirements.txt
 
 if ! hash vlc; then
   echo "Installing vlc ..."
