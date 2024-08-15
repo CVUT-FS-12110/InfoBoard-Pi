@@ -56,7 +56,7 @@ fi
 echo "Upgrading pip and setuptools..."
 .venv/bin/python -m pip install --upgrade pip
 echo "Installing requirements ..."
-.venv/bin/python -m pip install -I -r "$PWD"/requirements.txt
+.venv/bin/python -m pip install -r "$PWD"/requirements.txt
 
 if ! hash vlc; then
   echo "Installing vlc ..."
