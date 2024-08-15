@@ -234,15 +234,9 @@ class VideoPlayer(QVideoWidget):
 
 if __name__ == '__main__':
 
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'config.yaml'), 'r') as cfg:
-        config_dict = yaml.safe_load(cfg)
-        if config_dict is not None:
-            config = config_dict.get('configuration_file')
-        else:
-            config = None
     app = QApplication(sys.argv)
     geometry = app.desktop().availableGeometry()
-    window = MainWindow(AppData(configuration_file=config))
+    window = MainWindow(AppData())
     window.setGeometry(geometry)
     window.showFullScreen()
     # window.show()
