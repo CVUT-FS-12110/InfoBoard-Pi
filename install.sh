@@ -26,7 +26,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_    ROOT/bin:$PATH"
 
 echo "Creating Qt5 dev tools..."
-sudo apt install -y cmake
+sudo apt-get install build-essential cmake python3-dev cmake
 
 #if ! hash pyenv; then
 #  echo "Installing pyenv ..."
