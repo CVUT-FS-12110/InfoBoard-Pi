@@ -23,8 +23,8 @@ else
 fi
 
 echo "Creating Qt5 and dev tools..."
-sudo apt-get install build-essential cmake python3-dev cmake
-sudo apt install python3-pyqt5 python3-pyqt5.qtmultimedia
+sudo apt install -y build-essential cmake python3-dev cmake
+sudo apt install -y python3-pyqt5 python3-pyqt5.qtmultimedia
 
 #if ! hash pyenv; then
 #  echo "Installing pyenv ..."
@@ -58,6 +58,7 @@ echo "Installing requirements ..."
 echo "Installing streamlit server ..."
 .venv/bin/python3 -m pip install -r "$PWD"/requirements-streamlit.txt
 .venv/bin/python3 -m pip install --no-deps streamlit streamlit_authenticator streamlit_float
+.venv/bin/python3 -m pip install streamlit_authenticator streamlit_float
 
 if ! hash vlc; then
   echo "Installing vlc ..."
