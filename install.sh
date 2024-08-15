@@ -48,6 +48,7 @@ if [ ! -d "$PYENV_ROOT/versions/infoboard_venv" ]; then
 #      libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
 #      pyenv install "$version"
 #   fi
+   sudo apt install -y python3-full
    pyenv virtualenv --system-site-packages --python=/usr/bin/python3 infoboard_venv
 fi
 
