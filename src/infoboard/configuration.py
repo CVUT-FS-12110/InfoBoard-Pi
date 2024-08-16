@@ -144,7 +144,7 @@ else:
     if 'default_slide_time' in cfg.keys():
         cfg_data['default_slide_time'] = cfg.get('default_slide_time')
         updated = False
-    cfg_data['default_media_dir'] = os.path.realpath(os.path.dirname(default_media_dir))
+    cfg_data['default_media_dir'] = os.path.realpath(default_media_dir)
     if updated:
         print('Updating data config file ...')
         with open(DATA_CFG_FILE, 'w') as cfg_file:
