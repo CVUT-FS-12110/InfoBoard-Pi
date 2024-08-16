@@ -146,6 +146,7 @@ class MainWindow(QMainWindow):
     def __init__(self, app_data: AppData, parent=None):
         super().__init__(parent)
         self.app_data = app_data
+        self.setStyleSheet("background-color: black;")
         self.setWindowTitle("InfoBoard-Pi")
         self.geometry_info = QRect(0, 0, 1920, 1080)
         self.current_image = None
@@ -225,6 +226,8 @@ class NoMedia(QWidget):
         self.layout().addWidget(QLabel('No media, adding log:'))
         for log in appdata.mes:
             self.layout().addWidget(QLabel(log))
+        self.setLayout(QVBoxLayout())
+        self.layout().addWidget(QLabel('No media, adding log:'))
 
 class ImageViewer(QLabel):
     def __init__(self, image: str, size: QSize, parent=None):
@@ -237,9 +240,6 @@ class ImageViewer(QLabel):
 class VideoPlayer(QVideoWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        p = self.palette()
-        p.setColor(self.backgroundRole(), Qt.black)
-        self.setPalette(p)
 
 
 
