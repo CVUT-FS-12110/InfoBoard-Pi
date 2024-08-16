@@ -156,7 +156,7 @@ class MainWindow(QMainWindow):
         self.setCursor(Qt.BlankCursor)
         self.setGeometry(self.geometry_info)
         self.video_to_play = None
-        self.setCentralWidget(Logo())
+        self.setCentralWidget(LogoStart())
         QTimer.singleShot(1000, self.run_info)
 
     def run_info(self):
@@ -227,7 +227,9 @@ class NoMedia(QWidget):
         self.setStyleSheet("background-color: white;")
         self.setLayout(QVBoxLayout())
         self.layout().addWidget(Logo())
+        self.layout().setAlignment(0, Qt.AlignHCenter)
         self.layout().addWidget(QLabel('NO MEDIA'))
+        self.layout().setAlignment(1, Qt.AlignHCenter)
 
 class ImageViewer(QLabel):
     def __init__(self, image: str, size: QSize, parent=None):
@@ -242,6 +244,15 @@ class Logo(QLabel):
         self.image = QPixmap(os.path.join(os.path.dirname(__file__),'logo.png'))
         self.setPixmap(self.image)
 
+class LogoStart(QWidget):
+    def __init__(self, appdata: AppData, parent=None):
+        super().__init__(parent)
+        self.setStyleSheet("background-color: white;")
+        self.setLayout(QVBoxLayout())
+        self.layout().addWidget(Logo())
+        self.layout().setAlignment(0, Qt.AlignHCenter)
+        self.layout().addWidget(QLabel('NO MEDIA'))
+        self.layout().setAlignment(1, Qt.AlignHCenter)
 
 class VideoPlayer(QLabel):
     def __init__(self, parent=None):
