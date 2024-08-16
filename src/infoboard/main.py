@@ -185,7 +185,7 @@ class MainWindow(QMainWindow):
            # video_widget.play(self.current_video, self.video_change_state, self.show_image)
         process = QProcess()
         # print(f'play video {self.current_video}')
-        process.start(f"vlc --fullscreen --no-osd {media.url} vlc://quit")
+        process.start(f"vlc --fullscreen --no-osd --intf dummy {media.url} vlc://quit")
         process.waitForFinished(-1)
         process.close()
         self.video_change_state(0)
