@@ -137,18 +137,15 @@ if not os.path.isfile(DATA_CFG_FILE):
 else:
     with open(DATA_CFG_FILE, 'r') as cfg_file:
         cfg_data = yaml.safe_load(cfg_file)
-    updated = False
     if 'auto_update_data_config' in cfg.keys():
         cfg_data['auto_update'] = cfg.get('auto_update_data_config')
-        updated = True
     if 'default_slide_time' in cfg.keys():
         cfg_data['default_slide_time'] = cfg.get('default_slide_time')
-        updated = False
     cfg_data['default_media_dir'] = os.path.realpath(default_media_dir)
-    if updated:
-        print('Updating data config file ...')
-        with open(DATA_CFG_FILE, 'w') as cfg_file:
-            yaml.dump(cfg_data, cfg_file)
+
+    print('Updating data config file ...')
+    with open(DATA_CFG_FILE, 'w') as cfg_file:
+        yaml.dump(cfg_data, cfg_file)
 
 
 print('Setting cron jobs ...')
