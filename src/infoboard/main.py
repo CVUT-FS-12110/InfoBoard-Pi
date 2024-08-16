@@ -223,6 +223,9 @@ class ImageViewer(QLabel):
 class VideoPlayer(QVideoWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+        p = self.palette()
+        p.setColor(self.backgroundRole(), Qt.black)
+        self.setPalette(p)
 
 
 
