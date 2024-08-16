@@ -227,9 +227,9 @@ class NoMedia(QWidget):
         self.setStyleSheet("background-color: white;")
         self.setLayout(QVBoxLayout())
         self.layout().addWidget(Logo())
-        self.layout().setAlignment(0, Qt.AlignHCenter)
+        self.layout().setAlignment(Qt.AlignHCenter)
         self.layout().addWidget(QLabel('NO MEDIA'))
-        self.layout().setAlignment(1, Qt.AlignHCenter)
+
 
 class ImageViewer(QLabel):
     def __init__(self, image: str, size: QSize, parent=None):
@@ -250,9 +250,9 @@ class LogoStart(QWidget):
         self.setStyleSheet("background-color: white;")
         self.setLayout(QVBoxLayout())
         self.layout().addWidget(Logo())
-        self.layout().setAlignment(0, Qt.AlignHCenter)
+        self.layout().setAlignment(Qt.AlignHCenter)
         self.layout().addWidget(QLabel('Version 0.1'))
-        self.layout().setAlignment(1, Qt.AlignHCenter)
+
 
 class VideoPlayer(QLabel):
     def __init__(self, parent=None):
