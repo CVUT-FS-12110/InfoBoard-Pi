@@ -245,13 +245,13 @@ class Logo(QLabel):
         self.setPixmap(self.image)
 
 class LogoStart(QWidget):
-    def __init__(self, appdata: AppData, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
         self.setStyleSheet("background-color: white;")
         self.setLayout(QVBoxLayout())
         self.layout().addWidget(Logo())
         self.layout().setAlignment(0, Qt.AlignHCenter)
-        self.layout().addWidget(QLabel('NO MEDIA'))
+        self.layout().addWidget(QLabel('Version 0.1'))
         self.layout().setAlignment(1, Qt.AlignHCenter)
 
 class VideoPlayer(QLabel):
