@@ -249,11 +249,11 @@ class LogoStart(QWidget):
         super().__init__(parent)
         self.setStyleSheet("background-color: white;")
         self.setLayout(QVBoxLayout())
-        self.layout.addWidget(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+        self.layout().addStretch()
         self.layout().addWidget(Logo())
-        self.layout.addWidget(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Minimum))
+        self.layout().addStretch()
         self.layout().setAlignment(Qt.AlignHCenter)
-        self.layout.addWidget(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+        self.layout().addStretch()
         self.layout().addWidget(QLabel('Version 0.1'))
 
 
