@@ -184,7 +184,7 @@ class MainWindow(QMainWindow):
         video_widget = VideoPlayer()
         self.setCentralWidget(video_widget)
         self.video_to_play = media
-        QTimer.singleShot(200, self.start_video())
+        QTimer.singleShot(200, self.start_video)
         #    # video_widget.play(self.current_video, self.video_change_state, self.show_image)
         # process = QProcess()
         # # print(f'play video {self.current_video}')
