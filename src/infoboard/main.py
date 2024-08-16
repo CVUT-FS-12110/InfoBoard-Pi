@@ -225,7 +225,7 @@ class MainWindow(QMainWindow):
 class NoMedia(QWidget):
     def __init__(self, appdata: AppData, parent=None):
         super().__init__(parent)
-        self.setStyleSheet("background-color: white; 'QLabel{color: #bf6262; size: 16pt}'")
+        self.setStyleSheet("background-color: white;'")
         self.setLayout(QVBoxLayout())
         self.layout().addStretch()
         logo_layout = QHBoxLayout()
@@ -238,7 +238,7 @@ class NoMedia(QWidget):
         text_layout.addStretch()
         label = QLabel('NO MEDIA')
         label.setStyleSheet('QLabel{text-color: #bf6262; font-size: 16pt}')
-        text_layout.addWidget(QLabel('NO MEDIA'))
+        text_layout.addWidget(label)
         text_layout.addStretch()
         self.layout().addLayout(text_layout)
         self.layout().addStretch()
