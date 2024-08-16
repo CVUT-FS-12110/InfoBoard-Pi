@@ -237,7 +237,7 @@ class NoMedia(QWidget):
         text_layout = QHBoxLayout()
         text_layout.addStretch()
         label = QLabel('NO MEDIA')
-        label.setStyleSheet('QLabel{text-color: #bf6262; font-size: 16pt}')
+        label.setStyleSheet('QLabel{color: #bf6262; font-size: 16pt}')
         text_layout.addWidget(label)
         text_layout.addStretch()
         self.layout().addLayout(text_layout)
