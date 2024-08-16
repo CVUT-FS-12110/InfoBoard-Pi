@@ -154,6 +154,7 @@ class MainWindow(QMainWindow):
         self.videos = []
         self.setCursor(Qt.BlankCursor)
         self.setGeometry(self.geometry_info)
+        self.video_to_play = None
         QTimer.singleShot(1000, self.run_info)
 
     def run_info(self):
@@ -182,13 +183,24 @@ class MainWindow(QMainWindow):
     def show_video(self, media):
         video_widget = VideoPlayer()
         self.setCentralWidget(video_widget)
-           # video_widget.play(self.current_video, self.video_change_state, self.show_image)
-        process = QProcess()
-        # print(f'play video {self.current_video}')
-        process.start(f"vlc --fullscreen --no-osd --intf dummy {media.url} vlc://quit")
-        process.waitForFinished(-1)
-        process.close()
-        self.video_change_state(0)
+        self.video_to_play = media
+        # QTimer.singleShot(200, self.start_video())
+        #    # video_widget.play(self.current_video, self.video_change_state, self.show_image)
+        # process = QProcess()
+        # # print(f'play video {self.current_video}')
+        # process.start(f"vlc --fullscreen --no-osd --intf dummy {media.url} vlc://quit")
+        # process.waitForFinished(-1)
+        # process.close()
+        # self.video_change_state(0)
+
+    def start_video(self):
+        if self.video_to_play is not None:
+            process = QProcess()
+            process.start(f"vlc --fullscreen --no-osd --intf dummy {self.video_to_play.url} vlc://quit")
+            self.video_to_play = None
+            process.waitForFinished(-1)
+            process.close()
+            self.video_change_state(0)
 
     def start_show(self):
         QTimer.singleShot(2000, self.next_media)
