@@ -255,6 +255,7 @@ class LogoStart(QWidget):
         self.layout().setAlignment(Qt.AlignHCenter)
         self.layout().addStretch()
         self.layout().addWidget(QLabel('Version 0.1'))
+        self.layout().addStretch()
 
 
 class VideoPlayer(QLabel):
