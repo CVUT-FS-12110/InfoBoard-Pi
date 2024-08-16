@@ -250,8 +250,11 @@ class LogoStart(QWidget):
         self.setStyleSheet("background-color: white;")
         self.setLayout(QVBoxLayout())
         self.layout().addStretch()
-        self.layout().addWidget(Logo())
-        self.layout().addStretch()
+        logo_layout = QHBoxLayout()
+        logo_layout.addStretch()
+        logo_layout.addWidget(Logo())
+        logo_layout.addStretch()
+        self.layout().addLayout(logo_layout)
         self.layout().addStretch()
         text_layout = QHBoxLayout()
         text_layout.addStretch()
@@ -259,7 +262,7 @@ class LogoStart(QWidget):
         text_layout.addStretch()
         self.layout().addLayout(text_layout)
         self.layout().addStretch()
-        self.layout().setAlignment(Qt.AlignHCenter)
+
 
 
 class VideoPlayer(QLabel):
