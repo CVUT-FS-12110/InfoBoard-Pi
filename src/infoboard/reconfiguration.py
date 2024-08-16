@@ -70,7 +70,7 @@ if not os.path.isfile(DATA_CFG_FILE):
                     'default_media_dir': os.path.realpath(default_media_dir),
                     'media': [{'url': '', 'slide_time': 60}],
                     'server': {'cookie': {'expiry_days': 1,
-                                          'key': uuid.uuid4(),
+                                          'key': str(uuid.uuid4()),
                                           'name': 'infoboard-pi'},
                                'credentials': {'usernames': {'admin': {'failed_login_attempts': 0,
                                                                        'name': 'Administrator',
