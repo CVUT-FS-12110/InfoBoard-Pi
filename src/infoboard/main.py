@@ -220,7 +220,7 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color: white;")
         widget = NoMedia(self.app_data)
         self.setCentralWidget(widget)
-        QTimer.singleShot(60 * 1000, self.next_media)
+        QTimer.singleShot(10 * 1000, self.next_media)
 
 class NoMedia(QWidget):
     def __init__(self, appdata: AppData, parent=None):
