@@ -67,7 +67,7 @@ if not os.path.isfile(DATA_CFG_FILE):
 
     cfg_template = {'default_slide_time': 60,
                     'auto_update': cfg.get('auto_update_data_config', True),
-                    'default_media_dir': os.path.realpath(os.path.dirname(default_media_dir)),
+                    'default_media_dir': os.path.realpath(default_media_dir),
                     'media': [{'url': '', 'slide_time': 60}],
                     'server': {'cookie': {'expiry_days': 1,
                                           'key': uuid.uuid4(),
