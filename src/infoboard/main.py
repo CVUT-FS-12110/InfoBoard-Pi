@@ -249,8 +249,11 @@ class LogoStart(QWidget):
         super().__init__(parent)
         self.setStyleSheet("background-color: white;")
         self.setLayout(QVBoxLayout())
+        self.layout.addStretch()
         self.layout().addWidget(Logo())
+        self.layout.addStretch()
         self.layout().setAlignment(Qt.AlignHCenter)
+        self.layout.addStretch()
         self.layout().addWidget(QLabel('Version 0.1'))
 
 
