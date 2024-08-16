@@ -146,7 +146,7 @@ class MainWindow(QMainWindow):
     def __init__(self, app_data: AppData, parent=None):
         super().__init__(parent)
         self.app_data = app_data
-        self.setStyleSheet("background-color: black;")
+        self.setStyleSheet("background-color: white;")
         self.setWindowTitle("InfoBoard-Pi")
         self.geometry_info = QRect(0, 0, 1920, 1080)
         self.current_image = None
@@ -156,6 +156,7 @@ class MainWindow(QMainWindow):
         self.setCursor(Qt.BlankCursor)
         self.setGeometry(self.geometry_info)
         self.video_to_play = None
+        self.setCentralWidget(Logo())
         QTimer.singleShot(1000, self.run_info)
 
     def run_info(self):
@@ -163,6 +164,7 @@ class MainWindow(QMainWindow):
         QTimer.singleShot(1000, self.run_info)
 
     def next_media(self):
+        self.setStyleSheet("background-color: black;")
         self.app_data.update()
         media = self.app_data.get_next()
         if media is None:
@@ -222,12 +224,10 @@ class MainWindow(QMainWindow):
 class NoMedia(QWidget):
     def __init__(self, appdata: AppData, parent=None):
         super().__init__(parent)
+        self.setStyleSheet("background-color: white;")
         self.setLayout(QVBoxLayout())
-        self.layout().addWidget(QLabel('No media, adding log:'))
-        for log in appdata.mes:
-            self.layout().addWidget(QLabel(log))
-        self.setLayout(QVBoxLayout())
-        self.layout().addWidget(QLabel('No media, adding log:'))
+        self.layout().addWidget(Logo())
+        self.layout().addWidget(QLabel('NO MEDIA'))
 
 class ImageViewer(QLabel):
     def __init__(self, image: str, size: QSize, parent=None):
@@ -236,8 +236,14 @@ class ImageViewer(QLabel):
                                            transformMode=Qt.SmoothTransformation)
         self.setPixmap(self.image)
 
+class Logo(QLabel):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.image = QPixmap(os.path.join(os.path.dirname(__file__),'logo.png'))
+        self.setPixmap(self.image)
 
-class VideoPlayer(QVideoWidget):
+
+class VideoPlayer(QLabel):
     def __init__(self, parent=None):
         super().__init__(parent)
 
