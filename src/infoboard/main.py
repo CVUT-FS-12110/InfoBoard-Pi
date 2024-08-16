@@ -217,6 +217,7 @@ class MainWindow(QMainWindow):
     def no_media(self,):
         self.setGeometry(self.geometry_info)
         # self.current_image = media.url
+        self.setStyleSheet("background-color: white;")
         widget = NoMedia(self.app_data)
         self.setCentralWidget(widget)
         QTimer.singleShot(60 * 1000, self.next_media)
@@ -224,7 +225,7 @@ class MainWindow(QMainWindow):
 class NoMedia(QWidget):
     def __init__(self, appdata: AppData, parent=None):
         super().__init__(parent)
-        self.setStyleSheet("background-color: white;")
+        self.setStyleSheet("background-color: white; 'QLabel{color: #bf6262; size: 16pt}'")
         self.setLayout(QVBoxLayout())
         self.layout().addStretch()
         logo_layout = QHBoxLayout()
