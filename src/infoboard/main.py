@@ -252,10 +252,14 @@ class LogoStart(QWidget):
         self.layout().addStretch()
         self.layout().addWidget(Logo())
         self.layout().addStretch()
+        self.layout().addStretch()
+        text_layout = QHBoxLayout()
+        text_layout.addStretch()
+        text_layout.addWidget(QLabel('Version 0.1'))
+        text_layout.addStretch()
+        self.layout().addLayout(text_layout)
+        self.layout().addStretch()
         self.layout().setAlignment(Qt.AlignHCenter)
-        self.layout().addStretch()
-        self.layout().addWidget(QLabel('Version 0.1'))
-        self.layout().addStretch()
 
 
 class VideoPlayer(QLabel):
