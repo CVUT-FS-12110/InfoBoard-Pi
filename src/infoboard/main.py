@@ -184,10 +184,20 @@ class MainWindow(QMainWindow):
         QTimer.singleShot(media.slide_time * 1000, self.next_media)
 
     def show_video(self, media):
-        video_widget = VideoPlayer()
-        self.setCentralWidget(video_widget)
-        self.video_to_play = media
-        QTimer.singleShot(200, self.start_video)
+        if self.video_to_play is not None:
+            self.process = QProcess()
+            self.process.finished.connect(self.video_change_state)
+            self.process.start(f"vlc --fullscreen --no-osd --intf dummy {media.url} vlc://quit")
+            video_widget = VideoPlayer()
+            self.setCentralWidget(video_widget)
+
+        else:
+            self.video_change_state()
+
+        # video_widget = VideoPlayer()
+        # self.setCentralWidget(video_widget)
+        # self.video_to_play = media
+        # QTimer.singleShot(200, self.start_video)
         #    # video_widget.play(self.current_video, self.video_change_state, self.show_image)
         # process = QProcess()
         # # print(f'play video {self.current_video}')
@@ -196,15 +206,15 @@ class MainWindow(QMainWindow):
         # process.close()
         # self.video_change_state(0)
 
-    def start_video(self):
-        if self.video_to_play is not None:
-            self.process = QProcess()
-            self.process.finished.connect(self.video_change_state)
-            self.process.start(f"vlc --fullscreen --no-osd --intf dummy {self.video_to_play.url} vlc://quit")
-            self.video_to_play = None
-
-        else:
-            self.video_change_state()
+    # def start_video(self):
+    #     if self.video_to_play is not None:
+    #         self.process = QProcess()
+    #         self.process.finished.connect(self.video_change_state)
+    #         self.process.start(f"vlc --fullscreen --no-osd --intf dummy {self.video_to_play.url} vlc://quit")
+    #         self.video_to_play = None
+    #
+    #     else:
+    #         self.video_change_state()
 
     def start_show(self):
         QTimer.singleShot(2000, self.next_media)
