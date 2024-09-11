@@ -157,7 +157,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(self.geometry_info)
         self.video_to_play = None
         self.setCentralWidget(LogoStart())
-        QTimer.singleShot(1000, self.run_info)
+        QTimer.singleShot(5000, self.run_info)
 
     def run_info(self):
         Path(f'{ROOT_FOLDER}/.alive').touch()
@@ -198,21 +198,20 @@ class MainWindow(QMainWindow):
 
     def start_video(self):
         if self.video_to_play is not None:
-            process = QProcess()
-            process.start(f"vlc --fullscreen --no-osd --intf dummy {self.video_to_play.url} vlc://quit")
+            self.process = QProcess()
+            self.process.finished.connect(self.video_change_state)
+            self.process.start(f"vlc --fullscreen --no-osd --intf dummy {self.video_to_play.url} vlc://quit")
             self.video_to_play = None
-            process.waitForFinished(-1)
-            process.close()
-            self.video_change_state(0)
+
         else:
-            self.video_change_state(0)
+            self.video_change_state()
 
     def start_show(self):
         QTimer.singleShot(2000, self.next_media)
 
-    def video_change_state(self, state):
-        if state == 0:
-            self.next_media()
+    def video_change_state(self):
+        self.process.close()
+        self.next_media()
 
     def no_media(self,):
         self.setGeometry(self.geometry_info)
