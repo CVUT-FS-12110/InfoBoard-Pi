@@ -6,3 +6,6 @@ StartLimitBurst=10
 [Service]
 ExecStart=/usr/local/sbin/infoboardPiServer.sh
 Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
