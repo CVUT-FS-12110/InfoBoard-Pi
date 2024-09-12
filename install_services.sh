@@ -17,8 +17,8 @@ sudo cp "$PWD"/src/scripts/infoboard-pi-server.service /etc/systemd/system/infob
 sudo rm /usr/local/sbin/infoboardPi.sh
 sudo rm /usr/local/sbin/infoboardPiServer.sh
 
-echo exec sudo "$PWD"/src/scripts/start.sh | sudo tee -a /usr/local/sbin/infoboardPi.sh
-echo exec sudo "$PWD"/src/scripts/check_server.sh | sudo tee -a /usr/local/sbin/infoboardPiServer.sh
+echo exec sudo /bin/bash "$PWD"/src/scripts/start.sh | sudo tee -a /usr/local/sbin/infoboardPi.sh
+echo exec sudo /bin/bash "$PWD"/src/scripts/check_server.sh | sudo tee -a /usr/local/sbin/infoboardPiServer.sh
 
 sudo systemctl daemon-reload
 
