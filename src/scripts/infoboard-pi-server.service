@@ -1,7 +1,9 @@
 [Unit]
-Description=Infoboard Pi
+Description=Infoboard Pi Server
 StartLimitIntervalSec=60
 StartLimitBurst=10
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 ExecStart=/bin/bash /usr/local/sbin/infoboardPiServer.sh

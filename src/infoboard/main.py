@@ -157,11 +157,12 @@ class MainWindow(QMainWindow):
         self.setGeometry(self.geometry_info)
         self.process = None
         self.setCentralWidget(LogoStart())
-        QTimer.singleShot(5000, self.run_info)
+        # QTimer.singleShot(5000, self.run_info)
 
     def run_info(self):
-        Path(f'{ROOT_FOLDER}/.alive').touch()
-        QTimer.singleShot(1000, self.run_info)
+        pass
+        #Path(f'{ROOT_FOLDER}/.alive').touch()
+        #QTimer.singleShot(1000, self.run_info)
 
     def next_media(self):
         self.setStyleSheet("background-color: black;")
