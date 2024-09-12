@@ -188,7 +188,8 @@ class MainWindow(QMainWindow):
         if media is not None:
             self.process = QProcess()
             self.process.finished.connect(self.video_change_state)
-            self.process.start(f"vlc --fullscreen --no-osd --intf dummy {media.url} vlc://quit")
+            self.process.start(f"vlc --fullscreen --no-mouse-events --no-osd --no-audio --intf dummy {media.url} vlc://quit")
+
             video_widget = VideoPlayer()
             self.setCentralWidget(video_widget)
 
