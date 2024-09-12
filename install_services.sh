@@ -21,3 +21,10 @@ echo exec sudo "$PWD"/src/scripts/start.sh | sudo tee -a /usr/local/sbin/infoboa
 echo exec sudo "$PWD"/src/scripts/check_server.sh | sudo tee -a /usr/local/sbin/infoboardPiServer.sh
 
 sudo systemctl daemon-reload
+
+echo Services installed
+echo
+echo Enable services by:
+echo sudo systemctl enable infoboard-pi-server.service
+echo sudo systemctl enable infoboard-pi.service
+
