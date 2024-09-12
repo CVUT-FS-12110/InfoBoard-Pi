@@ -4,7 +4,7 @@ StartLimitIntervalSec=60
 StartLimitBurst=10
 
 [Service]
-ExecStart=/usr/local/sbin/infoboardPi.sh
+ExecStart=/bin/bash /usr/local/sbin/infoboardPi.sh
 Restart=on-failure
 
 [Install]
