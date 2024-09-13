@@ -208,7 +208,7 @@ class MainWindow(QMainWindow):
     def start_video_embedded(self):
         self.setCentralWidget(self.vlc_player)
         # self.vlc_player.play()
-        QTimer.singleShot(200, self.check_video)
+        QTimer.singleShot(1000, self.check_video)
 
     def check_video(self):
         if not self.vlc_player.is_stopped():
