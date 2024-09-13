@@ -251,7 +251,7 @@ class Logo(QLabel):
 class LogoStart(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setStyleSheet("background-color: white;")
+        # self.setStyleSheet("background-color: white;")
         layout = QVBoxLayout()
         layout.addStretch()
         logo_layout = QHBoxLayout()
