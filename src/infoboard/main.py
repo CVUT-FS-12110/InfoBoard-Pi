@@ -194,17 +194,17 @@ class MainWindow(QMainWindow):
         self.central.setCurrentIndex(1)
         QTimer.singleShot(media.slide_time * 1000, self.next_media)
 
-    def show_video(self, media):
-        if media is not None:
-            self.process = QProcess()
-            self.process.finished.connect(self.video_change_state)
-            self.process.start(f"vlc --fullscreen --no-mouse-events --no-osd --no-audio --intf dummy {media.url} vlc://quit")
-
-            video_widget = VideoPlayer()
-            self.setCentralWidget(video_widget)
-
-        else:
-            self.video_change_state()
+    # def show_video(self, media):
+    #     if media is not None:
+    #         self.process = QProcess()
+    #         self.process.finished.connect(self.video_change_state)
+    #         self.process.start(f"vlc --fullscreen --no-mouse-events --no-osd --no-audio --intf dummy {media.url} vlc://quit")
+    #
+    #         video_widget = VideoPlayer()
+    #         self.setCentralWidget(video_widget)
+    #
+    #     else:
+    #         self.video_change_state()
 
     def show_video_embedded(self, media):
         if media is not None:
@@ -232,7 +232,7 @@ class MainWindow(QMainWindow):
         QTimer.singleShot(1000, self.check_video)
 
     def check_video(self):
-        if not self.vlc_player.is_stopped():
+        if not self.video_viewer.is_stopped():
             QTimer.singleShot(200, self.check_video)
         else:
             self.next_media()
