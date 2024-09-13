@@ -164,11 +164,6 @@ class MainWindow(QMainWindow):
         # self.mediaplayer = self.vlc_instance.media_player_new()
         # QTimer.singleShot(5000, self.run_info)
 
-    def run_info(self):
-        pass
-        #Path(f'{ROOT_FOLDER}/.alive').touch()
-        #QTimer.singleShot(1000, self.run_info)
-
     def next_media(self):
         self.setStyleSheet("background-color: black;")
         self.app_data.update()
@@ -183,7 +178,6 @@ class MainWindow(QMainWindow):
 
     def show_image(self, media):
         self.setGeometry(self.geometry_info)
-        # self.current_image = media.url
         image_widget = ImageViewer(image=media.url, size=self.size())
         self.setCentralWidget(image_widget)
 
@@ -203,10 +197,11 @@ class MainWindow(QMainWindow):
 
     def show_video_embedded(self, media):
         if media is not None:
-            self.vlc_player = VideoPlayer()
+            self.vlc_player = VideoPlayer(media)
             self.setCentralWidget(self.vlc_player)
-            self.vlc_player.set_media(media)
-            QTimer.singleShot(50, self.start_video_embedded)
+            # self.vlc_player.set_media(media)
+            self.vlc_player.play()
+            #QTimer.singleShot(50, self.start_video_embedded)
         else:
             self.next_media()
 
@@ -292,12 +287,13 @@ class LogoStart(QWidget):
         self.layout().addStretch()
 
 class VideoPlayer(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, media, parent=None):
         super().__init__(parent)
         self.instance = vlc.Instance('quite')
-        self.mediaplayer = self.instance.media_player_new()
+        self.media = media
+        self.vlc_media = self.instance.media_new(media.url)
+        self.mediaplayer = self.instance.media_player_new(self.media.url)
         self.setAutoFillBackground(True)
-        self.media = None
         self.vlc_media = None
         # put the media in the media player
         self.frame = QFrame(self)
