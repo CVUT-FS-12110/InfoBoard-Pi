@@ -342,7 +342,10 @@ class VideoPlayer(QWidget):
 
 
     def play(self):
+        print('set frame')
+        print(int(self.frame.winId()))
         self.mediaplayer.set_xwindow(int(self.frame.winId()))
+        print('play')
         self.mediaplayer.play()
 
     def set_media(self, media):
