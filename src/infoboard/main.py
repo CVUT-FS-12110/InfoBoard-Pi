@@ -333,7 +333,7 @@ class VideoPlayer(QWidget):
 
 
     def play(self):
-        self.mediaplayer.set_xwindow(self.frame.winId())
+        self.mediaplayer.set_xwindow(int(self.frame.winId()))
         self.mediaplayer.play()
 
     def is_stopped(self):
