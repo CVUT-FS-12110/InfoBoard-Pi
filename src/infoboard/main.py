@@ -20,7 +20,7 @@ SCRIPT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 ROOT_FOLDER = os.path.realpath(os.path.join(SCRIPT_FOLDER, '..', '..'))
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'data')
 SLIDE_TIME = 60
-
+VLC_INSTANCE = vlc.Instance(['quite', 'adummy'])
 
 @dataclass
 class Media:
@@ -181,7 +181,8 @@ class MainWindow(QMainWindow):
         image_widget = ImageViewer(image=media.url, size=self.size())
         self.setCentralWidget(image_widget)
         if isinstance(self.vlc_player, VideoPlayer):
-            self.vlc_player.deleteLater()
+            del self.vlc_player
+            self.vlc_player = None
         QTimer.singleShot(media.slide_time * 1000, self.next_media)
 
     def show_video(self, media):
@@ -239,7 +240,8 @@ class MainWindow(QMainWindow):
         widget = NoMedia(self.app_data)
         self.setCentralWidget(widget)
         if isinstance(self.vlc_player, VideoPlayer):
-            self.vlc_player.deleteLater()
+            del self.vlc_player
+            self.vlc_player = None
         QTimer.singleShot(10 * 1000, self.next_media)
 
 class NoMedia(QWidget):
@@ -299,10 +301,9 @@ class LogoStart(QWidget):
 class VideoPlayer(QWidget):
     def __init__(self, media, parent=None):
         super().__init__(parent)
-        self.instance = vlc.Instance(['quite', 'adummy'])
         self.media = media
-        self.vlc_media = self.instance.media_new(media.url)
-        self.mediaplayer = self.instance.media_player_new(self.media.url)
+        self.vlc_media = VLC_INSTANCE.media_new(media.url)
+        self.mediaplayer = VLC_INSTANCE.media_player_new(self.media.url)
         self.mediaplayer.audio_set_mute(True)
         self.setAutoFillBackground(True)
         self.vlc_media = None
