@@ -137,12 +137,13 @@ class MainWindow(QMainWindow):
         self.video_viewer = VideoPlayer()
         self.no_media_screen = NoMedia(self.app_data)
         self.central = QStackedWidget()
+        self.setCentralWidget(self.central)
         self.central.addWidget(self.star_screen)
         self.central.addWidget(self.image_viewer)
         self.central.addWidget(self.video_viewer)
         self.central.addWidget(self.no_media_screen)
         self.central.setCurrentIndex(0)
-        self.setCentralWidget(self.central)
+
 
     def next_media(self):
         self.setStyleSheet("background-color: black;")
