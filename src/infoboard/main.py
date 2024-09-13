@@ -159,8 +159,8 @@ class MainWindow(QMainWindow):
         self.setGeometry(self.geometry_info)
         self.process = None
         self.setCentralWidget(LogoStart())
-        self.vlc_instance = vlc.Instance()
-        self.mediaplayer = self.vlc_instance.media_player_new()
+        # self.vlc_instance = vlc.Instance()
+        # self.mediaplayer = self.vlc_instance.media_player_new()
         # QTimer.singleShot(5000, self.run_info)
 
     def run_info(self):
@@ -315,9 +315,10 @@ class LogoStart(QWidget):
         self.layout().addStretch()
 
 class VideoPlayer(QWidget):
-    def __init__(self, media, mediaplayer, parent=None):
+    def __init__(self, media, parent=None):
         super().__init__(parent)
-        self.mediaplayer = mediaplayer
+        self.vlc_instance = vlc.Instance()
+        self.mediaplayer = self.vlc_instance.media_player_new()
         self.media = media
         self.palette = self.palette()
         self.palette.setColor (QPalette.Window,
@@ -342,6 +343,11 @@ class VideoPlayer(QWidget):
 
     def is_stopped(self):
         return not self.mediaplayer.is_playing()
+
+    def closeEvent(self):
+        del self.mediaplayer
+        del self.vlc_instance
+        print('close')
 
 
 if __name__ == '__main__':
