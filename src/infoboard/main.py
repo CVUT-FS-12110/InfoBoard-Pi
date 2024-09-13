@@ -159,6 +159,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(self.geometry_info)
         self.process = None
         self.setCentralWidget(LogoStart())
+        self.vlc_player = VideoPlayer()
         # self.vlc_instance = vlc.Instance()
         # self.mediaplayer = self.vlc_instance.media_player_new()
         # QTimer.singleShot(5000, self.run_info)
@@ -202,16 +203,15 @@ class MainWindow(QMainWindow):
 
     def show_video_embedded(self, media):
         if media is not None:
-            vlc_player = VideoPlayer(media, self.mediaplayer)
-            self.setCentralWidget(vlc_player)
-            QTimer.singleShot(200, lambda: self.start_video_embedded(vlc_player))
-            vlc_player.play()
+            self.setCentralWidget(self.vlc_player)
+            self.vlc_player.set_media(media)
+            QTimer.singleShot(200, lambda: self.start_video_embedded)
         else:
             self.next_media()
 
     def start_video_embedded(self, vlc_player):
         vlc_player.play()
-        QTimer.singleShot(1000, lambda: self.check_video(vlc_player))
+        QTimer.singleShot(1000, self.check_video)
 
     def check_video(self, vlc_player):
         print(vlc_player.is_stopped())
@@ -321,7 +321,6 @@ class VideoPlayer(QWidget):
         super().__init__(parent)
         self.vlc_instance = vlc.Instance()
         self.mediaplayer = self.vlc_instance.media_player_new()
-        self.media = media
         self.palette = self.palette()
         self.palette.setColor (QPalette.Window,
                                QColor(0,0,0))
@@ -330,9 +329,9 @@ class VideoPlayer(QWidget):
         self.instance = vlc.Instance()
         # creating an empty vlc media player
         self.mediaplayer = self.instance.media_player_new()
-        self.vlc_media = self.instance.media_new(media.url)
+        self.media = None
+        self.vlc_media = None
         # put the media in the media player
-        self.mediaplayer.set_media(self.vlc_media)
         self.frame = QFrame(self)
         self.widget_layout = QHBoxLayout()
         self.widget_layout.addWidget(self.frame)
@@ -343,13 +342,18 @@ class VideoPlayer(QWidget):
         self.mediaplayer.set_xwindow(int(self.frame.winId()))
         self.mediaplayer.play()
 
+    def set_media(self, media):
+        self.media = media
+        self.vlc_media = self.instance.media_new(media.url)
+        self.mediaplayer.set_media(self.vlc_media)
+
+    def stop(self):
+        if not self.is_stopped():
+            self.mediaplayer.stop()
+
     def is_stopped(self):
         return not self.mediaplayer.is_playing()
 
-    def closeEvent(self):
-        del self.mediaplayer
-        del self.vlc_instance
-        print('close')
 
 
 if __name__ == '__main__':
