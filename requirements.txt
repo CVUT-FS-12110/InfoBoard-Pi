@@ -2,6 +2,6 @@ pyyaml
 python-crontab
 psutil
 sh
-
+python-vlc
 
 

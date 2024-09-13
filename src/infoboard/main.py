@@ -15,6 +15,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 
+import vlc
+
 SCRIPT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 ROOT_FOLDER = os.path.realpath(os.path.join(SCRIPT_FOLDER, '..', '..'))
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'data')
@@ -157,6 +159,8 @@ class MainWindow(QMainWindow):
         self.setGeometry(self.geometry_info)
         self.process = None
         self.setCentralWidget(LogoStart())
+        self.vlc_instance = vlc.Instance()
+        self.mediaplayer = self.vlc_instance.media_player_new()
         # QTimer.singleShot(5000, self.run_info)
 
     def run_info(self):
@@ -174,7 +178,7 @@ class MainWindow(QMainWindow):
             if isinstance(media, Image):
                 self.show_image(media)
             else:
-                self.show_video(media)
+                self.show_video_embedded(media)
 
     def show_image(self, media):
         self.setGeometry(self.geometry_info)
@@ -195,6 +199,23 @@ class MainWindow(QMainWindow):
 
         else:
             self.video_change_state()
+
+    def show_video_embedded(self, media):
+        if media is not None:
+            vlc_player = VideoPlayer(media, self.mediaplayer)
+            self.setCentralWidget(vlc_player)
+            vlc_player.play()
+            QTimer.singleShot(200, self.check_video)
+
+        else:
+            self.video_change_state()
+
+    def check_video(self):
+        if self.mediaplayer.is_playing():
+            QTimer.singleShot(200, self.check_video)
+        else:
+            self.next_media()
+
 
         # video_widget = VideoPlayer()
         # self.setCentralWidget(video_widget)
@@ -289,12 +310,29 @@ class LogoStart(QWidget):
         self.layout().addLayout(text_layout)
         self.layout().addStretch()
 
-
-
-class VideoPlayer(QLabel):
-    def __init__(self, parent=None):
+class VideoPlayer(QFrame):
+    def __init__(self, media, mediaplayer, parent=None):
         super().__init__(parent)
+        self.mediaplayer = mediaplayer
+        self.media = media
+        self.palette = self.palette()
+        self.palette.setColor (QPalette.Window,
+                               QColor(0,0,0))
+        self.setPalette(self.palette)
+        self.setAutoFillBackground(True)
+        self.instance = vlc.Instance()
+        # creating an empty vlc media player
+        self.mediaplayer = self.instance.media_player_new()
+        self.vlc_media = self.instance.media_new(media.url)
+        # put the media in the media player
+        self.mediaplayer.set_media(self.vlc_media)
 
+    def play(self):
+        self.mediaplayer.set_xwindow(self.winId())
+        self.mediaplayer.play()
+
+    def is_stopped(self):
+        return not self.mediaplayer.is_playing()
 
 
 if __name__ == '__main__':
