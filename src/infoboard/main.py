@@ -201,7 +201,7 @@ class MainWindow(QMainWindow):
             # self.setCentralWidget(self.vlc_player)
             # self.vlc_player.set_media(media)
             self.vlc_player.play()
-            QTimer.singleShot(200, self.start_video_embedded)
+            QTimer.singleShot(500, self.start_video_embedded)
         else:
             self.next_media()
 
