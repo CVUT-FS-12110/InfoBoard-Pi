@@ -294,7 +294,7 @@ class LogoStart(QWidget):
 class VideoPlayer(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.vlc_instance = vlc.Instance()
+        self.vlc_instance = vlc.Instance(opt='--quite')
         self.mediaplayer = self.vlc_instance.media_player_new()
         self.palette = self.palette()
         self.palette.setColor (QPalette.Window,
