@@ -317,7 +317,7 @@ class LogoStart(QWidget):
         self.layout().addStretch()
 
 class VideoPlayer(QWidget):
-    def __init__(self, media, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
         self.vlc_instance = vlc.Instance()
         self.mediaplayer = self.vlc_instance.media_player_new()
