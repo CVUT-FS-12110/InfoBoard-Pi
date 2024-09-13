@@ -105,32 +105,6 @@ class AppData:
             self.config = Configuration.from_dict(config_dict)
         self.config_last_update = datetime.timestamp(datetime.now())
 
-        # if self.config.auto_update == True:
-        #     try:
-        #         from os import listdir
-        #         from os.path import isfile, join
-        #         onlyfiles = [os.path.realpath(os.path.join(self.config.default_media_dir, f)) for f in os.listdir(self.config.default_media_dir) if os.path.isfile(os.path.join(self.config.default_media_dir, f))]
-        #         self.mes.append(str(onlyfiles))
-        #         cfg_urls = [media.url for media in self.config.media]
-        #         self.mes.append(str(cfg_urls))
-        #         new_files = [f for f in onlyfiles if f not in cfg_urls]
-        #         self.mes.append(str(new_files))
-        #         files_update = []
-        #         for new_file in new_files:
-        #             mime = mimetypes.guess_type(new_file)[0]
-        #             if mime is not None:
-        #                 if mime.startswith('image') or mime.startswith('video'):
-        #                     files_update.append({'url': new_file})
-        #         self.mes.append(str(files_update))
-        #         if files_update:
-        #             with open(self.configuration_file, 'r') as cfg:
-        #                 config_dict = yaml.safe_load(cfg)
-        #             config_dict['media'] += files_update
-        #             with open(self.configuration_file, 'w') as cfg:
-        #                 yaml.dump(config_dict, cfg)
-        #     except Exception as e:
-        #         self.mes.append(str(e))
-
     def get_next(self) -> Union[Media, None]:
         if not self.config.media:
             return None
@@ -169,10 +143,6 @@ class MainWindow(QMainWindow):
         self.central.addWidget(self.no_media_screen)
         self.central.setCurrentIndex(0)
         self.setCentralWidget(self.central)
-        # self.vlc_player = None
-        # self.vlc_instance = vlc.Instance()
-        # self.mediaplayer = self.vlc_instance.media_player_new()
-        # QTimer.singleShot(5000, self.run_info)
 
     def next_media(self):
         self.setStyleSheet("background-color: black;")
@@ -206,30 +176,21 @@ class MainWindow(QMainWindow):
     #     else:
     #         self.video_change_state()
 
+    # def video_change_state(self):
+    #     if isinstance(self.process, QProcess):
+    #         self.process.close()
+    #     self.process = None
+    #     self.next_media()
+
+
     def show_video_embedded(self, media):
         if media is not None:
             self.video_viewer.set_media(media)
             self.video_viewer.play()
             self.central.setCurrentIndex(2)
             QTimer.singleShot(1000, self.check_video)
-            # if isinstance(self.vlc_player, VideoPlayer):
-            #     self.vlc_player.set_media(media)
-            #     self.vlc_player.play()
-            #     QTimer.singleShot(1000, self.check_video)
-            # else:
-            #     self.vlc_player = VideoPlayer(media)
-            #     self.vlc_player.play()
-            #     QTimer.singleShot(1000, self.start_video_embedded)
-            # self.setCentralWidget(self.vlc_player)
-            # self.vlc_player.set_media(media)
-
         else:
             self.next_media()
-
-    def start_video_embedded(self):
-        self.setCentralWidget(self.vlc_player)
-        # self.vlc_player.play()
-        QTimer.singleShot(1000, self.check_video)
 
     def check_video(self):
         if not self.video_viewer.is_stopped():
@@ -240,22 +201,10 @@ class MainWindow(QMainWindow):
     def start_show(self):
         QTimer.singleShot(2000, self.next_media)
 
-    def video_change_state(self):
-        if isinstance(self.process, QProcess):
-            self.process.close()
-        self.process = None
-        self.next_media()
-
     def no_media(self,):
         self.setGeometry(self.geometry_info)
-        # self.current_image = media.url
         self.setStyleSheet("background-color: white;")
-        # widget = NoMedia(self.app_data)
-        # self.setCentralWidget(widget)
         self.central.setCurrentIndex(3)
-        # if isinstance(self.vlc_player, VideoPlayer):
-        #     del self.vlc_player
-        #     self.vlc_player = None
         QTimer.singleShot(1000, self.next_media)
 
 class NoMedia(QWidget):
@@ -303,20 +252,21 @@ class LogoStart(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setStyleSheet("background-color: white;")
-        self.setLayout(QVBoxLayout())
-        self.layout().addStretch()
+        layout = QVBoxLayout()
+        layout.addStretch()
         logo_layout = QHBoxLayout()
         logo_layout.addStretch()
         logo_layout.addWidget(Logo())
         logo_layout.addStretch()
-        self.layout().addLayout(logo_layout)
-        self.layout().addStretch()
+        layout.addLayout(logo_layout)
+        layout.addStretch()
         text_layout = QHBoxLayout()
         text_layout.addStretch()
         text_layout.addWidget(QLabel('Version 0.1'))
         text_layout.addStretch()
-        self.layout().addLayout(text_layout)
-        self.layout().addStretch()
+        layout.addLayout(text_layout)
+        layout.addStretch()
+        self.setLayout(layout)
 
 class VideoPlayer(QWidget):
     def __init__(self, media=None, parent=None):
