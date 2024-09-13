@@ -294,6 +294,7 @@ class VideoPlayer(QWidget):
         self.media = media
         self.vlc_media = self.instance.media_new(media.url)
         self.mediaplayer = self.instance.media_player_new(self.media.url)
+        self.mediaplayer.audio_set_mute(True)
         self.setAutoFillBackground(True)
         self.vlc_media = None
         # put the media in the media player
