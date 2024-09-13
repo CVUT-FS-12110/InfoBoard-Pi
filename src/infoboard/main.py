@@ -201,7 +201,7 @@ class MainWindow(QMainWindow):
             # self.setCentralWidget(self.vlc_player)
             # self.vlc_player.set_media(media)
             self.vlc_player.play()
-            QTimer.singleShot(700, self.start_video_embedded)
+            QTimer.singleShot(1000, self.start_video_embedded)
         else:
             self.next_media()
 
@@ -290,7 +290,7 @@ class LogoStart(QWidget):
 class VideoPlayer(QWidget):
     def __init__(self, media, parent=None):
         super().__init__(parent)
-        self.instance = vlc.Instance('quite')
+        self.instance = vlc.Instance(['quite', 'adummy'])
         self.media = media
         self.vlc_media = self.instance.media_new(media.url)
         self.mediaplayer = self.instance.media_player_new(self.media.url)
