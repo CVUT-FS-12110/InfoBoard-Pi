@@ -11,8 +11,6 @@ from datetime import datetime
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
-from PyQt5.QtMultimediaWidgets import QVideoWidget
 
 import vlc
 
@@ -235,12 +233,12 @@ class ImageViewer(QLabel):
     def __init__(self, image: str, size: QSize, parent=None):
         super().__init__(parent)
         self.size = size
-        self.image = QPixmap(image).scaled(self.size, aspectRatioMode=Qt.KeepAspectRatioByExpanding,
+        self.image = QPixmap(image).scaled(self.size, aspectRatioMode=Qt.KeepAspectRatio,
                                            transformMode=Qt.SmoothTransformation)
         self.setPixmap(self.image)
 
     def set_image(self, image):
-        self.image = QPixmap(image).scaled(self.size, aspectRatioMode=Qt.KeepAspectRatioByExpanding,
+        self.image = QPixmap(image).scaled(self.size, aspectRatioMode=Qt.KeepAspectRatio,
                                            transformMode=Qt.SmoothTransformation)
         self.setPixmap(self.image)
 
