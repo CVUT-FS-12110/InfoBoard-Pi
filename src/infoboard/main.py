@@ -162,7 +162,7 @@ class MainWindow(QMainWindow):
         self.image_viewer.set_image(media.url)
         # image_widget = ImageViewer(image=media.url, size=self.size())
         # self.setCentralWidget(image_widget)
-        self.central.setCurrentIndex(1)
+        self.central.setCurrentIndex(0)
         QTimer.singleShot(media.slide_time * 1000, self.next_media)
 
     # def show_video(self, media):
@@ -188,7 +188,7 @@ class MainWindow(QMainWindow):
         if media is not None:
             self.video_viewer.set_media(media)
             self.video_viewer.play()
-            self.central.setCurrentIndex(2)
+            self.central.setCurrentIndex(1)
             QTimer.singleShot(1000, self.check_video)
         else:
             self.next_media()
@@ -206,7 +206,7 @@ class MainWindow(QMainWindow):
     def no_media(self,):
         self.setGeometry(self.geometry_info)
         self.setStyleSheet("background-color: white;")
-        self.central.setCurrentIndex(3)
+        self.central.setCurrentIndex(2)
         QTimer.singleShot(1000, self.next_media)
 
 class NoMedia(QWidget):
