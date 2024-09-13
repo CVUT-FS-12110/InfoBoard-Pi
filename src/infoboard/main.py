@@ -334,14 +334,10 @@ class VideoPlayer(QWidget):
         self.widget_layout = QHBoxLayout()
         self.widget_layout.addWidget(self.frame)
         self.setLayout(self.widget_layout)
-        print('player created')
-
 
     def play(self):
-        print('set frame')
         print(int(self.frame.winId()))
         self.mediaplayer.set_xwindow(int(self.frame.winId()))
-        print('play')
         self.mediaplayer.play()
 
     def set_media(self, media):
