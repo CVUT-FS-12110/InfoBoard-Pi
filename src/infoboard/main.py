@@ -216,8 +216,10 @@ class MainWindow(QMainWindow):
     def check_video(self, vlc_player):
         print(vlc_player.is_stopped())
         if not vlc_player.is_stopped():
+            print('playing')
             QTimer.singleShot(200, lambda: self.check_video(vlc_player))
         else:
+            print('stopped')
             self.next_media()
 
 
