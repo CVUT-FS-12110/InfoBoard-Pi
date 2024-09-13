@@ -3,7 +3,6 @@ import sys
 import mimetypes
 import inspect
 import yaml
-import logging
 
 from typing import Union
 
@@ -22,7 +21,6 @@ ROOT_FOLDER = os.path.realpath(os.path.join(SCRIPT_FOLDER, '..', '..'))
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'data')
 SLIDE_TIME = 60
 
-LOGGER = logging.Logger('infoboard')
 
 @dataclass
 class Media:
@@ -161,7 +159,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(self.geometry_info)
         self.process = None
         self.setCentralWidget(LogoStart())
-        self.vlc_player = VideoPlayer()
+        self.vlc_player = None
         # self.vlc_instance = vlc.Instance()
         # self.mediaplayer = self.vlc_instance.media_player_new()
         # QTimer.singleShot(5000, self.run_info)
@@ -204,13 +202,10 @@ class MainWindow(QMainWindow):
             self.video_change_state()
 
     def show_video_embedded(self, media):
-        LOGGER.info('media')
         if media is not None:
-            print('set central widget')
+            self.vlc_player = VideoPlayer()
             self.setCentralWidget(self.vlc_player)
-            print('set media')
             self.vlc_player.set_media(media)
-            print('set central widget')
             QTimer.singleShot(200, self.start_video_embedded)
         else:
             self.next_media()
@@ -220,12 +215,9 @@ class MainWindow(QMainWindow):
         QTimer.singleShot(1000, self.check_video)
 
     def check_video(self):
-        print(self.vlc_player.is_stopped())
         if not self.vlc_player.is_stopped():
-            print('playing')
             QTimer.singleShot(200, self.check_video)
         else:
-            print('stopped')
             self.next_media()
 
 
