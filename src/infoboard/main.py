@@ -206,7 +206,7 @@ class MainWindow(QMainWindow):
             self.vlc_player = VideoPlayer()
             self.setCentralWidget(self.vlc_player)
             self.vlc_player.set_media(media)
-            QTimer.singleShot(200, self.start_video_embedded)
+            QTimer.singleShot(50, self.start_video_embedded)
         else:
             self.next_media()
 
@@ -219,29 +219,6 @@ class MainWindow(QMainWindow):
             QTimer.singleShot(200, self.check_video)
         else:
             self.next_media()
-
-
-        # video_widget = VideoPlayer()
-        # self.setCentralWidget(video_widget)
-        # self.video_to_play = media
-        # QTimer.singleShot(200, self.start_video)
-        #    # video_widget.play(self.current_video, self.video_change_state, self.show_image)
-        # process = QProcess()
-        # # print(f'play video {self.current_video}')
-        # process.start(f"vlc --fullscreen --no-osd --intf dummy {media.url} vlc://quit")
-        # process.waitForFinished(-1)
-        # process.close()
-        # self.video_change_state(0)
-
-    # def start_video(self):
-    #     if self.video_to_play is not None:
-    #         self.process = QProcess()
-    #         self.process.finished.connect(self.video_change_state)
-    #         self.process.start(f"vlc --fullscreen --no-osd --intf dummy {self.video_to_play.url} vlc://quit")
-    #         self.video_to_play = None
-    #
-    #     else:
-    #         self.video_change_state()
 
     def start_show(self):
         QTimer.singleShot(2000, self.next_media)
@@ -336,7 +313,6 @@ class VideoPlayer(QWidget):
         self.setLayout(self.widget_layout)
 
     def play(self):
-        print(int(self.frame.winId()))
         self.mediaplayer.set_xwindow(int(self.frame.winId()))
         self.mediaplayer.play()
 
