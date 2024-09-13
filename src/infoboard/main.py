@@ -180,7 +180,8 @@ class MainWindow(QMainWindow):
         self.setGeometry(self.geometry_info)
         image_widget = ImageViewer(image=media.url, size=self.size())
         self.setCentralWidget(image_widget)
-
+        if isinstance(self.vlc_player, VideoPlayer):
+            self.vlc_player.deleteLater()
         QTimer.singleShot(media.slide_time * 1000, self.next_media)
 
     def show_video(self, media):
@@ -197,11 +198,17 @@ class MainWindow(QMainWindow):
 
     def show_video_embedded(self, media):
         if media is not None:
-            self.vlc_player = VideoPlayer(media)
+            if isinstance(self.vlc_player, VideoPlayer):
+                self.vlc_player.set_media(media)
+                self.vlc_player.play()
+                QTimer.singleShot(1000, self.check_video)
+            else:
+                self.vlc_player = VideoPlayer(media)
+                self.vlc_player.play()
+                QTimer.singleShot(1000, self.start_video_embedded)
             # self.setCentralWidget(self.vlc_player)
             # self.vlc_player.set_media(media)
-            self.vlc_player.play()
-            QTimer.singleShot(1000, self.start_video_embedded)
+
         else:
             self.next_media()
 
@@ -231,6 +238,8 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color: white;")
         widget = NoMedia(self.app_data)
         self.setCentralWidget(widget)
+        if isinstance(self.vlc_player, VideoPlayer):
+            self.vlc_player.deleteLater()
         QTimer.singleShot(10 * 1000, self.next_media)
 
 class NoMedia(QWidget):
