@@ -204,13 +204,17 @@ class MainWindow(QMainWindow):
         if media is not None:
             vlc_player = VideoPlayer(media, self.mediaplayer)
             self.setCentralWidget(vlc_player)
+            QTimer.singleShot(200, lambda: self.start_video_embedded(vlc_player))
             vlc_player.play()
-            QTimer.singleShot(200, self.check_video)
-
         else:
-            self.video_change_state()
+            self.next_media()
+
+    def start_video_embedded(self, vlc_player):
+        vlc_player.play()
+        QTimer.singleShot(1000, self.check_video)
 
     def check_video(self):
+        print(self.mediaplayer.is_playing())
         if self.mediaplayer.is_playing():
             QTimer.singleShot(200, self.check_video)
         else:
