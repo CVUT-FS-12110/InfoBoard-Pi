@@ -132,13 +132,11 @@ class MainWindow(QMainWindow):
         self.setCursor(Qt.BlankCursor)
         self.setGeometry(self.geometry_info)
         self.process = None
-        self.star_screen = LogoStart()
+        self.setCentralWidget(LogoStart())
         self.image_viewer = ImageViewer(image=os.path.join(os.path.dirname(__file__),'logo.png'), size=self.size())
         self.video_viewer = VideoPlayer()
         self.no_media_screen = NoMedia(self.app_data)
         self.central = QStackedWidget()
-        self.setCentralWidget(self.central)
-        self.central.addWidget(self.star_screen)
         self.central.addWidget(self.image_viewer)
         self.central.addWidget(self.video_viewer)
         self.central.addWidget(self.no_media_screen)
@@ -146,6 +144,8 @@ class MainWindow(QMainWindow):
 
 
     def next_media(self):
+        if isinstance(self.centralWidget(), LogoStart):
+            self.setCentralWidget(self.central)
         self.setStyleSheet("background-color: black;")
         self.app_data.update()
         media = self.app_data.get_next()
@@ -201,6 +201,7 @@ class MainWindow(QMainWindow):
 
     def start_show(self):
         QTimer.singleShot(2000, self.next_media)
+
 
     def no_media(self,):
         self.setGeometry(self.geometry_info)
