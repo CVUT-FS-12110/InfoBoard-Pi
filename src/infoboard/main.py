@@ -3,7 +3,7 @@ import sys
 import mimetypes
 import inspect
 import yaml
-from pathlib import Path
+import logging
 
 from typing import Union
 
@@ -21,6 +21,8 @@ SCRIPT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 ROOT_FOLDER = os.path.realpath(os.path.join(SCRIPT_FOLDER, '..', '..'))
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'data')
 SLIDE_TIME = 60
+
+LOGGER = logging.Logger('infoboard')
 
 @dataclass
 class Media:
@@ -202,6 +204,7 @@ class MainWindow(QMainWindow):
             self.video_change_state()
 
     def show_video_embedded(self, media):
+        LOGGER.info('media')
         if media is not None:
             print('set central widget')
             self.setCentralWidget(self.vlc_player)
@@ -326,7 +329,7 @@ class VideoPlayer(QWidget):
         self.mediaplayer = self.vlc_instance.media_player_new()
         self.palette = self.palette()
         self.palette.setColor (QPalette.Window,
-                               QColor(0,0,0))
+                               QColor(255,0,0))
         self.setPalette(self.palette)
         self.setAutoFillBackground(True)
         self.instance = vlc.Instance()
@@ -339,6 +342,7 @@ class VideoPlayer(QWidget):
         self.widget_layout = QHBoxLayout()
         self.widget_layout.addWidget(self.frame)
         self.setLayout(self.widget_layout)
+        print('player created')
 
 
     def play(self):
