@@ -294,8 +294,8 @@ class LogoStart(QWidget):
 class VideoPlayer(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.vlc_instance = vlc.Instance('quite')
-        self.mediaplayer = self.vlc_instance.media_player_new()
+        self.instance = vlc.Instance('quite')
+        self.mediaplayer = self.instance.media_player_new()
         self.setAutoFillBackground(True)
         self.media = None
         self.vlc_media = None
