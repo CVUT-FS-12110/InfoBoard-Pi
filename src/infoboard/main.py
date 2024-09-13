@@ -212,8 +212,8 @@ class MainWindow(QMainWindow):
         else:
             self.next_media()
 
-    def start_video_embedded(self, vlc_player):
-        vlc_player.play()
+    def start_video_embedded(self):
+        self.vlc_player.play()
         QTimer.singleShot(1000, self.check_video)
 
     def check_video(self):
