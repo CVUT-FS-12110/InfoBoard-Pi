@@ -310,7 +310,7 @@ class LogoStart(QWidget):
         self.layout().addLayout(text_layout)
         self.layout().addStretch()
 
-class VideoPlayer(QFrame):
+class VideoPlayer(QWidget):
     def __init__(self, media, mediaplayer, parent=None):
         super().__init__(parent)
         self.mediaplayer = mediaplayer
@@ -326,9 +326,14 @@ class VideoPlayer(QFrame):
         self.vlc_media = self.instance.media_new(media.url)
         # put the media in the media player
         self.mediaplayer.set_media(self.vlc_media)
+        self.frame = QFrame(self)
+        self.widget_layout = QHBoxLayout()
+        self.widget_layout.addWidget(self.frame)
+        self.setLayout(self.widget_layout)
+
 
     def play(self):
-        self.mediaplayer.set_xwindow(self.winId())
+        self.mediaplayer.set_xwindow(self.frame.winId())
         self.mediaplayer.play()
 
     def is_stopped(self):
