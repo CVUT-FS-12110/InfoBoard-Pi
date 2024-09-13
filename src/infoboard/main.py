@@ -158,8 +158,18 @@ class MainWindow(QMainWindow):
         self.setCursor(Qt.BlankCursor)
         self.setGeometry(self.geometry_info)
         self.process = None
-        self.setCentralWidget(LogoStart())
-        self.vlc_player = None
+        self.star_screen = LogoStart()
+        self.image_viewer = ImageViewer(image=os.path.join(os.path.dirname(__file__),'logo.png'), size=self.size())
+        self.video_viewer = VideoPlayer()
+        self.no_media_screen = NoMedia(self.app_data)
+        self.central = QStackedWidget()
+        self.central.addWidget(self.star_screen)
+        self.central.addWidget(self.image_viewer)
+        self.central.addWidget(self.video_viewer)
+        self.central.addWidget(self.no_media_screen)
+        self.central.setCurrentIndex(1)
+        self.setCentralWidget(self.central)
+        # self.vlc_player = None
         # self.vlc_instance = vlc.Instance()
         # self.mediaplayer = self.vlc_instance.media_player_new()
         # QTimer.singleShot(5000, self.run_info)
@@ -178,11 +188,10 @@ class MainWindow(QMainWindow):
 
     def show_image(self, media):
         self.setGeometry(self.geometry_info)
-        image_widget = ImageViewer(image=media.url, size=self.size())
-        self.setCentralWidget(image_widget)
-        if isinstance(self.vlc_player, VideoPlayer):
-            del self.vlc_player
-            self.vlc_player = None
+        self.image_viewer.set_image(media.url)
+        # image_widget = ImageViewer(image=media.url, size=self.size())
+        # self.setCentralWidget(image_widget)
+        self.central.setCurrentIndex(2)
         QTimer.singleShot(media.slide_time * 1000, self.next_media)
 
     def show_video(self, media):
@@ -199,14 +208,18 @@ class MainWindow(QMainWindow):
 
     def show_video_embedded(self, media):
         if media is not None:
-            if isinstance(self.vlc_player, VideoPlayer):
-                self.vlc_player.set_media(media)
-                self.vlc_player.play()
-                QTimer.singleShot(1000, self.check_video)
-            else:
-                self.vlc_player = VideoPlayer(media)
-                self.vlc_player.play()
-                QTimer.singleShot(1000, self.start_video_embedded)
+            self.video_viewer.set_media(media)
+            self.video_viewer.play()
+            self.central.setCurrentIndex(3)
+            QTimer.singleShot(1000, self.check_video)
+            # if isinstance(self.vlc_player, VideoPlayer):
+            #     self.vlc_player.set_media(media)
+            #     self.vlc_player.play()
+            #     QTimer.singleShot(1000, self.check_video)
+            # else:
+            #     self.vlc_player = VideoPlayer(media)
+            #     self.vlc_player.play()
+            #     QTimer.singleShot(1000, self.start_video_embedded)
             # self.setCentralWidget(self.vlc_player)
             # self.vlc_player.set_media(media)
 
@@ -237,12 +250,13 @@ class MainWindow(QMainWindow):
         self.setGeometry(self.geometry_info)
         # self.current_image = media.url
         self.setStyleSheet("background-color: white;")
-        widget = NoMedia(self.app_data)
-        self.setCentralWidget(widget)
-        if isinstance(self.vlc_player, VideoPlayer):
-            del self.vlc_player
-            self.vlc_player = None
-        QTimer.singleShot(10 * 1000, self.next_media)
+        # widget = NoMedia(self.app_data)
+        # self.setCentralWidget(widget)
+        self.central.setCurrentIndex(4)
+        # if isinstance(self.vlc_player, VideoPlayer):
+        #     del self.vlc_player
+        #     self.vlc_player = None
+        QTimer.singleShot(1000, self.next_media)
 
 class NoMedia(QWidget):
     def __init__(self, appdata: AppData, parent=None):
@@ -269,7 +283,13 @@ class NoMedia(QWidget):
 class ImageViewer(QLabel):
     def __init__(self, image: str, size: QSize, parent=None):
         super().__init__(parent)
-        self.image = QPixmap(image).scaled(size, aspectRatioMode=Qt.KeepAspectRatioByExpanding,
+        self.size = size
+        self.image = QPixmap(image).scaled(self.size, aspectRatioMode=Qt.KeepAspectRatioByExpanding,
+                                           transformMode=Qt.SmoothTransformation)
+        self.setPixmap(self.image)
+
+    def set_image(self, image):
+        self.image = QPixmap(image).scaled(self.size, aspectRatioMode=Qt.KeepAspectRatioByExpanding,
                                            transformMode=Qt.SmoothTransformation)
         self.setPixmap(self.image)
 
@@ -299,11 +319,14 @@ class LogoStart(QWidget):
         self.layout().addStretch()
 
 class VideoPlayer(QWidget):
-    def __init__(self, media, parent=None):
+    def __init__(self, media=None, parent=None):
         super().__init__(parent)
         self.media = media
-        self.vlc_media = VLC_INSTANCE.media_new(media.url)
-        self.mediaplayer = VLC_INSTANCE.media_player_new(self.media.url)
+        if media:
+            self.vlc_media = VLC_INSTANCE.media_new(media.url)
+            self.mediaplayer = VLC_INSTANCE.media_player_new(self.media.url)
+        else:
+            self.mediaplayer = VLC_INSTANCE.media_player_new()
         self.mediaplayer.audio_set_mute(True)
         self.setAutoFillBackground(True)
         self.vlc_media = None
