@@ -167,7 +167,7 @@ class MainWindow(QMainWindow):
         self.central.addWidget(self.image_viewer)
         self.central.addWidget(self.video_viewer)
         self.central.addWidget(self.no_media_screen)
-        self.central.setCurrentIndex(1)
+        self.central.setCurrentIndex(0)
         self.setCentralWidget(self.central)
         # self.vlc_player = None
         # self.vlc_instance = vlc.Instance()
@@ -191,7 +191,7 @@ class MainWindow(QMainWindow):
         self.image_viewer.set_image(media.url)
         # image_widget = ImageViewer(image=media.url, size=self.size())
         # self.setCentralWidget(image_widget)
-        self.central.setCurrentIndex(2)
+        self.central.setCurrentIndex(1)
         QTimer.singleShot(media.slide_time * 1000, self.next_media)
 
     def show_video(self, media):
@@ -210,7 +210,7 @@ class MainWindow(QMainWindow):
         if media is not None:
             self.video_viewer.set_media(media)
             self.video_viewer.play()
-            self.central.setCurrentIndex(3)
+            self.central.setCurrentIndex(2)
             QTimer.singleShot(1000, self.check_video)
             # if isinstance(self.vlc_player, VideoPlayer):
             #     self.vlc_player.set_media(media)
@@ -252,7 +252,7 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color: white;")
         # widget = NoMedia(self.app_data)
         # self.setCentralWidget(widget)
-        self.central.setCurrentIndex(4)
+        self.central.setCurrentIndex(3)
         # if isinstance(self.vlc_player, VideoPlayer):
         #     del self.vlc_player
         #     self.vlc_player = None
