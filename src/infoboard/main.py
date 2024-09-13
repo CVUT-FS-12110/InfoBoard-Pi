@@ -203,9 +203,12 @@ class MainWindow(QMainWindow):
 
     def show_video_embedded(self, media):
         if media is not None:
+            print('set central widget')
             self.setCentralWidget(self.vlc_player)
+            print('set media')
             self.vlc_player.set_media(media)
-            QTimer.singleShot(200, lambda: self.start_video_embedded)
+            print('set central widget')
+            QTimer.singleShot(200, self.start_video_embedded)
         else:
             self.next_media()
 
@@ -213,11 +216,11 @@ class MainWindow(QMainWindow):
         vlc_player.play()
         QTimer.singleShot(1000, self.check_video)
 
-    def check_video(self, vlc_player):
-        print(vlc_player.is_stopped())
-        if not vlc_player.is_stopped():
+    def check_video(self):
+        print(self.vlc_player.is_stopped())
+        if not self.vlc_player.is_stopped():
             print('playing')
-            QTimer.singleShot(200, lambda: self.check_video(vlc_player))
+            QTimer.singleShot(200, self.check_video)
         else:
             print('stopped')
             self.next_media()
