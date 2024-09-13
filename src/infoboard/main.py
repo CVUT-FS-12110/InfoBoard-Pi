@@ -319,7 +319,7 @@ class VideoPlayer(QWidget):
 
     def set_media(self, media):
         self.media = media
-        self.vlc_media = self.instance.media_new(media.url)
+        self.vlc_media = VLC_INSTANCE.media_new(media.url)
         self.mediaplayer.set_media(self.vlc_media)
 
     def stop(self):
