@@ -296,14 +296,7 @@ class VideoPlayer(QWidget):
         super().__init__(parent)
         self.vlc_instance = vlc.Instance('quite')
         self.mediaplayer = self.vlc_instance.media_player_new()
-        self.palette = self.palette()
-        self.palette.setColor (QPalette.Window,
-                               QColor(255,0,0))
-        self.setPalette(self.palette)
         self.setAutoFillBackground(True)
-        self.instance = vlc.Instance()
-        # creating an empty vlc media player
-        self.mediaplayer = self.instance.media_player_new()
         self.media = None
         self.vlc_media = None
         # put the media in the media player
