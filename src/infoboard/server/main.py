@@ -158,6 +158,7 @@ def update_media_config(media_list):
                                'slide_time': media.slide_time})
     config['media'] = new_media_list
 
+
 def viewer():
     set_centered()
     st.title('Slideshow list')
@@ -243,14 +244,24 @@ def user_edit_user():
         except Exception as e:
             st.error(e)
 
+def pi_control():
+    set_centered()
+    st.title('Infoboard PI Control')
+    if st.button(':material/power_settings_new: Shutdown', key=f'power_off'):
+        os.system("poweroff")
+    if st.button(':material/restart_alt: Reboot', key=f'reboot'):
+        os.system("reboot")
+
+
 login_page = st.Page(login, title="Log in", icon=":material/login:")
 logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
 viewer_page = st.Page(viewer, title="Slideshow List", icon=":material/slideshow:")
 edit_user_page = st.Page(user_edit_user, title="Edit account", icon=":material/manage_accounts:")
+raspberry_control = st.Page(pi_control, title="PI Control", icon=":material/developer_board:")
 
 if check_login():
     pages = {}
-    pages['Infoboard'] = [viewer_page]
+    pages['Infoboard'] = [viewer_page, raspberry_control]
     pages['Account'] = [edit_user_page, logout_page]
 
     pg = st.navigation(pages)

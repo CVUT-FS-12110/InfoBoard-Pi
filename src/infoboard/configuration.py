@@ -127,7 +127,7 @@ if not os.path.isfile(DATA_CFG_FILE):
                                           'name': 'infoboard-pi'},
                                'credentials': {'usernames': {'admin': {'failed_login_attempts': 0,
                                                                        'name': 'Administrator',
-                                                                       'password': '$2b$12$IZx1HDGy78pJwqQuIvnksuxapDgjUHbPg9RtatwH0D94HFCgy7vhe'},
+                                                                       'password': '$2b$12$nOZpnhTzKu5iU/xPz.88mu2pkkJDeMQPXi8zwnQ5CQFDQRAv2B2qe'},
                                                              }
                                                }
                                }
